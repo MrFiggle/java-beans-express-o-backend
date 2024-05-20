@@ -1,10 +1,145 @@
 package io.catalyte.demo.categories;
 
-public class Category {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
+@Entity
+public class Product {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+  private Boolean active;
+  private String description;
   private String name;
-  private String imageUrl;
+  private String imageURL;
+  private int vendorId;
+  private ArrayList<String> ingredients;
+  //  change to an enum
+  private String classification;
+  private String drinkType;
+  private BigDecimal cost;
+  private ArrayList<String> allergens;
+  private int markupPercentage;
+  private BigDecimal salePrice;
+
+  public Product() {
+  }
+
+  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, String drinkType, String classification, BigDecimal cost, ArrayList<String> allergens, int markupPercentage, BigDecimal salePrice) {
+    this.active = active;
+    this.description = description;
+    this.name = name;
+    this.imageURL = imageURL;
+    this.vendorId = vendorId;
+    this.ingredients = ingredients;
+    this.drinkType = drinkType;
+    this.classification = classification;
+    this.cost = cost;
+    this.allergens = allergens;
+    this.markupPercentage = markupPercentage;
+    this.salePrice = salePrice;
+  }
+
+  public Boolean getActive() {
+    return active;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getImageURL() {
+    return imageURL;
+  }
+
+  public int getVendorId() {
+    return vendorId;
+  }
+
+  public String getClassification() {
+    return classification;
+  }
+
+  public ArrayList<String> getIngredients() {
+    return ingredients;
+  }
+
+  public String getDrinkType() {
+    return drinkType;
+  }
+
+  public BigDecimal getCost() {
+    return cost;
+  }
+
+  public ArrayList<String> getAllergens() {
+    return allergens;
+  }
+
+  public int getMarkupPercentage() {
+    return markupPercentage;
+  }
+
+  public BigDecimal getSalePrice() {
+    return salePrice;
+  }
+
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setImageURL(String imageURL) {
+    this.imageURL = imageURL;
+  }
+
+  public void setVendorId(int vendorId) {
+    this.vendorId = vendorId;
+  }
+
+  public void setIngredients(ArrayList<String> ingredients) {
+    this.ingredients = ingredients;
+  }
+
+  public void setClassification(String classification) {
+    this.classification = classification;
+  }
+
+  public void setDrinkType(String drinkType) {
+    this.drinkType = drinkType;
+  }
+
+  public void setCost(BigDecimal cost) {
+    this.cost = cost;
+  }
+
+  public void setAllergens(ArrayList<String> allergens) {
+    this.allergens = allergens;
+  }
+
+  public void setSalePrice(BigDecimal salePrice) {
+    this.salePrice = salePrice;
+  }
+
+  public void setMarkupPercentage(int markupPercentage) {
+    this.markupPercentage = markupPercentage;
+  }
 
   public int getId() {
     return id;
@@ -13,20 +148,5 @@ public class Category {
   public void setId(int id) {
     this.id = id;
   }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getImageUrl() {
-    return imageUrl;
-  }
-
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-  }
 }
+
