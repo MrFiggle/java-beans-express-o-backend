@@ -8,6 +8,22 @@ import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+enum ProductType {
+  DRINK,
+  BAKEDGOOD
+}
+enum DrinkType {
+  COFFEE,
+  SODA,
+  TEA
+}
+enum AllergenList {
+  DAIRY,
+  SOY,
+  GLUTEN,
+  NUTS
+}
+
 @Entity
 public class Product {
   @Id
@@ -19,27 +35,38 @@ public class Product {
   private String imageURL;
   private int vendorId;
   private ArrayList<String> ingredients;
-  //  change to an enum
-  private String classification;
-  private String drinkType;
+  private ProductType classification;
+  private DrinkType drinkType;
   private BigDecimal cost;
-  private ArrayList<String> allergens;
+  private ArrayList<AllergenList> allergens;
   private int markupPercentage;
   private BigDecimal salePrice;
 
   public Product() {
   }
-
-  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, String drinkType, String classification, BigDecimal cost, ArrayList<String> allergens, int markupPercentage, BigDecimal salePrice) {
+//DRINK CONSTRUCTOR
+  public Product(Boolean active, String description, String name, String imageURL, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens, BigDecimal salePrice) {
+    this.active = active;
+    this.description = description;
+    this.name = name;
+    this.imageURL = imageURL;
+    this.ingredients = ingredients;
+    this.drinkType = drinkType;
+    this.classification = classification;
+    this.cost = costToProduce;
+    this.allergens = allergens;
+    this.salePrice = salePrice;
+  }
+//BAKEDGOOD CONSTRUCTOR
+  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage, BigDecimal salePrice) {
     this.active = active;
     this.description = description;
     this.name = name;
     this.imageURL = imageURL;
     this.vendorId = vendorId;
     this.ingredients = ingredients;
-    this.drinkType = drinkType;
     this.classification = classification;
-    this.cost = cost;
+    this.cost = vendorPrice;
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
     this.salePrice = salePrice;
@@ -65,7 +92,7 @@ public class Product {
     return vendorId;
   }
 
-  public String getClassification() {
+  public ProductType getClassification() {
     return classification;
   }
 
@@ -73,7 +100,7 @@ public class Product {
     return ingredients;
   }
 
-  public String getDrinkType() {
+  public DrinkType getDrinkType() {
     return drinkType;
   }
 
@@ -81,7 +108,7 @@ public class Product {
     return cost;
   }
 
-  public ArrayList<String> getAllergens() {
+  public ArrayList<AllergenList> getAllergens() {
     return allergens;
   }
 
@@ -117,11 +144,11 @@ public class Product {
     this.ingredients = ingredients;
   }
 
-  public void setClassification(String classification) {
+  public void setClassification(ProductType classification) {
     this.classification = classification;
   }
 
-  public void setDrinkType(String drinkType) {
+  public void setDrinkType(DrinkType drinkType) {
     this.drinkType = drinkType;
   }
 
@@ -129,7 +156,7 @@ public class Product {
     this.cost = cost;
   }
 
-  public void setAllergens(ArrayList<String> allergens) {
+  public void setAllergens(ArrayList<AllergenList> allergens) {
     this.allergens = allergens;
   }
 

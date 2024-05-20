@@ -30,9 +30,9 @@ public class ProductServiceImplTest {
     @Test
     public void getProductByName_withValidName_returnsArrayWith2Products(){
         ArrayList<Product> productsInDataBase = new ArrayList<>();
-        productsInDataBase.add(new Product(true, "hi", "hi", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Taylor", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Taylor", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "hi", "Taylor", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "hi", "Taylor", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         when(productRepository.findAll()).thenReturn(productsInDataBase);
         List<Product> result = productService.getProductByName("Taylor");
         productsInDataBase.remove(0);
@@ -50,9 +50,9 @@ public class ProductServiceImplTest {
     @Test
     public void getProductByName_withInvalidName_returnsNotFound(){
         ArrayList<Product> productsInDataBase = new ArrayList<>();
-        productsInDataBase.add(new Product(true, "hi", "hi", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Taylor", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Taylor", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "hi", "Taylor", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "hi", "Taylor", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         when(productRepository.findAll()).thenReturn(productsInDataBase);
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             productService.getProductByName("Candy");
