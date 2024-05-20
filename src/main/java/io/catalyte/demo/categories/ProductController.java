@@ -19,7 +19,6 @@ public class ProductController {
   @GetMapping
   @ResponseStatus( HttpStatus.OK )
   public List<Product> getProductByName(@RequestParam String name) {
-    productService.addDummyData();
     return productService.getProductByName(name);
   }
 

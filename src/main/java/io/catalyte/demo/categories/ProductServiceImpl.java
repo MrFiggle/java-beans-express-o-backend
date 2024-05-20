@@ -18,15 +18,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl( ProductRepository productRepository ) {
         this.productRepository = productRepository;
     }
-    @Override
-    public void addDummyData(){
-        Product product = new Product(true, "hi", "hi", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67));
-        productRepository.save(product);
-        Product product2 = new Product(true, "hi", "Taylor", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67));
-        productRepository.save(product2);
-        Product product3 = new Product(true, "hi", "Kairo", "hi", 5, new ArrayList<String>(), "hi", "hi", BigDecimal.valueOf(12.56), new ArrayList<String>(), 45, BigDecimal.valueOf(5.67));
-        productRepository.save(product3);
-    }
+
     @Override
     public List<Product> getProductByName(String name) {
         if (Objects.equals(name, "") || name == null){
