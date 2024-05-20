@@ -18,37 +18,37 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoriesController {
 
   private static int idCounter = 1;
-  private static List<Category> categories = new ArrayList<>();
+  private static List<Product> categories = new ArrayList<>();
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<Category> getCategories() {
+  public List<Product> getCategories() {
     return categories;
   }
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Category getCategoryById(@PathVariable int id) {
+  public Product getCategoryById(@PathVariable int id) {
     return categories.get(id-1);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Category createCategory(@RequestBody Category categoryToCreate) {
-    categoryToCreate.setId(idCounter++);
-    categories.add(categoryToCreate);
+  public Product createCategory(@RequestBody Product productToCreate) {
+    productToCreate.setId(idCounter++);
+    categories.add(productToCreate);
 
-    return categoryToCreate;
+    return productToCreate;
   }
 
   @PutMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Category editCategory(@RequestBody Category categoryToEdit, @PathVariable int id) {
-    if (categories.size() >= id - 1 && categoryToEdit.getId() == id) {
-      categories.set(id - 1, categoryToEdit);
+  public Product editCategory(@RequestBody Product productToEdit, @PathVariable int id) {
+    if (categories.size() >= id - 1 && productToEdit.getId() == id) {
+      categories.set(id - 1, productToEdit);
     }
 
-    return categoryToEdit;
+    return productToEdit;
   }
 
   @DeleteMapping(value = "/{id}")
