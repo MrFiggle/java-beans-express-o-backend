@@ -29,6 +29,9 @@ public class Product {
   private int markupPercentage;
   private BigDecimal salePrice;
 
+  /**
+   * Creates an instance of the product with no values
+   */
   public Product() {
   }
   /**
@@ -42,9 +45,8 @@ public class Product {
    * @param drinkType An Enum value to determine the type of drink the product is.
    * @param costToProduce BigDecimal value of the cost to make the product.
    * @param allergens A list of allergens that product contains
-   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, String imageURL, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens, BigDecimal salePrice) {
+  public Product(Boolean active, String description, String name, String imageURL, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -54,10 +56,10 @@ public class Product {
     this.classification = classification;
     this.cost = costToProduce;
     this.allergens = allergens;
-    this.salePrice = salePrice;
+    this.salePrice = costToProduce;
   }
   /**
-   * Creates an instance of Product (specifically Backed goods) with the provided fields
+   * Creates an instance of Product (specifically Baked goods) with the provided fields
    * @param active Boolean value to determine active status of the product.
    * @param description String value that describes the product.
    * @param name The name of the product
@@ -68,9 +70,8 @@ public class Product {
    * @param vendorPrice BigDecimal value of the cost to purchase
    * @param allergens A list of allergens that product contains
    * @param markupPercentage Integer value of the markup percentage
-   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage, BigDecimal salePrice) {
+  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -81,7 +82,7 @@ public class Product {
     this.cost = vendorPrice;
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
-    this.salePrice = salePrice;
+    this.salePrice = BigDecimal.valueOf(vendorPrice.intValue() * (markupPercentage/100)) ;
   }
   /**
    * Retrieves the active status of the product.

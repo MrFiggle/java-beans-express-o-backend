@@ -27,9 +27,9 @@ public class ProductServiceImplTest {
     public void setUp(){
         productService = new ProductServiceImpl(productRepository);
         productsInDataBase = new ArrayList<>();
-        productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Latte", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(false, "hello", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(1.23)));
+        productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
+        productsInDataBase.add(new Product(true, "hi", "Latte", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
+        productsInDataBase.add(new Product(false, "hello", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
     }
     @Test
     public void getProductByName_withValidName_returnsArrayWith2Products(){
