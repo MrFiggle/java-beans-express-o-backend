@@ -21,18 +21,18 @@ public class ProductServiceImplTest {
     ProductService productService;
     @Mock
     ProductRepository productRepository;
-    Product testProduct;
+    ArrayList<Product> productsInDataBase;
 
     @BeforeEach
     public void setUp(){
         productService = new ProductServiceImpl(productRepository);
-    }
-    @Test
-    public void getProductByName_withValidName_returnsArrayWith2Products(){
-        ArrayList<Product> productsInDataBase = new ArrayList<>();
+        productsInDataBase = new ArrayList<>();
         productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         productsInDataBase.add(new Product(true, "hi", "Latte", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         productsInDataBase.add(new Product(true, "hi", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+    }
+    @Test
+    public void getProductByName_withValidName_returnsArrayWith2Products(){
         when(productRepository.findAll()).thenReturn(productsInDataBase);
         List<Product> result = productService.getProductByName("latte");
         productsInDataBase.remove(0);
@@ -49,10 +49,6 @@ public class ProductServiceImplTest {
     }
     @Test
     public void getProductByName_withInvalidName_returnsNotFound(){
-        ArrayList<Product> productsInDataBase = new ArrayList<>();
-        productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Latte", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         when(productRepository.findAll()).thenReturn(productsInDataBase);
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             productService.getProductByName("Candy");
