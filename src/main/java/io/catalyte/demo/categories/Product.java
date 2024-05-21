@@ -8,21 +8,9 @@ import jakarta.persistence.Id;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-enum ProductType {
-  DRINK,
-  BAKEDGOOD
-}
-enum DrinkType {
-  COFFEE,
-  SODA,
-  TEA
-}
-enum AllergenList {
-  DAIRY,
-  SOY,
-  GLUTEN,
-  NUTS
-}
+
+
+
 
 @Entity
 public class Product {
