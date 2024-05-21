@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findAll();
         ArrayList<Product> matchedProducts = new ArrayList<>();
         for (Product product : products) {
-            if (Objects.equals(product.getName(), name)) {
+            if (Objects.equals(product.getName().toLowerCase(), name.toLowerCase())) {
                 matchedProducts.add(product);
             }
         }
