@@ -19,7 +19,6 @@ public class Product {
   private Boolean active;
   private String description;
   private String name;
-  private String imageURL;
   private int vendorId;
   private ArrayList<String> ingredients;
   private ProductType classification;
@@ -39,18 +38,16 @@ public class Product {
    * @param active Boolean value to determine active status of the product.
    * @param description String value that describes the product.
    * @param name The name of the product
-   * @param imageURL String value of the url for the image of the product.
    * @param ingredients A list of ingredients in the product.
    * @param classification An Enum value to determine the type of product. (Drink)
    * @param drinkType An Enum value to determine the type of drink the product is.
    * @param costToProduce BigDecimal value of the cost to make the product.
    * @param allergens A list of allergens that product contains
    */
-  public Product(Boolean active, String description, String name, String imageURL, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens) {
+  public Product(Boolean active, String description, String name, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens) {
     this.active = active;
     this.description = description;
     this.name = name;
-    this.imageURL = imageURL;
     this.ingredients = ingredients;
     this.drinkType = drinkType;
     this.classification = classification;
@@ -63,7 +60,6 @@ public class Product {
    * @param active Boolean value to determine active status of the product.
    * @param description String value that describes the product.
    * @param name The name of the product
-   * @param imageURL String value of the url for the image of the product.
    * @param vendorId Integer id of the vendor of the product.
    * @param ingredients A list of ingredients in the product.
    * @param classification An Enum value to determine the type of product. (Baked Good)
@@ -71,11 +67,10 @@ public class Product {
    * @param allergens A list of allergens that product contains
    * @param markupPercentage Integer value of the markup percentage
    */
-  public Product(Boolean active, String description, String name, String imageURL, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage) {
+  public Product(Boolean active, String description, String name, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage) {
     this.active = active;
     this.description = description;
     this.name = name;
-    this.imageURL = imageURL;
     this.vendorId = vendorId;
     this.ingredients = ingredients;
     this.classification = classification;
@@ -104,13 +99,6 @@ public class Product {
    */
   public String getName() {
     return name;
-  }
-  /**
-   * Retrieves the image URL of the product.
-   * @return the image URL of the product.
-   */
-  public String getImageURL() {
-    return imageURL;
   }
   /**
    * Retrieves the vendor id of the product.
@@ -188,13 +176,6 @@ public class Product {
    */
   public void setName(String name) {
     this.name = name;
-  }
-  /**
-   * Sets the image URL of the product.
-   * @param imageURL the image URl to be set
-   */
-  public void setImageURL(String imageURL) {
-    this.imageURL = imageURL;
   }
   /**
    * Sets the vendor id of the product.
