@@ -9,25 +9,49 @@ import java.util.Optional;
 
 
 @Service
-public class VendorServiceImpl implements VendorService{
+public class VendorServiceImpl implements VendorService {
 
-    VendorRepository vendorRepository;
+    private final VendorRepository vendorRepository;
 
+    /**
+     * Constructs a VendorServiceImpl with the specified VendorRepository.
+     *
+     * @param vendorRepository the repository to be used for vendor operations
+     */
     @Autowired
     public VendorServiceImpl(VendorRepository vendorRepository) {
         this.vendorRepository = vendorRepository;
     }
 
+    /**
+     * Retrieves a vendor by its ID.
+     *
+     * @param id the ID of the vendor to retrieve
+     * @return the vendor with the specified ID
+     * @throws ResponseStatusException if the vendor with the specified ID is not found
+     */
     @Override
     public Vendor getVendorById(int id) {
         Optional<Vendor> optional = vendorRepository.findById(id);
-        if (optional.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found");
+        if (optional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found");
+        }
         return optional.get();
     }
 
+    /**
+     * Edits an existing vendor with new information.
+     *
+     * @param updatedVendor the updated vendor information
+     * @param id the ID of the vendor to edit
+     * @return the updated vendor
+     * @throws ResponseStatusException if the ID in the updated vendor is set or the vendor with the specified ID is not found
+     */
     @Override
     public Vendor editVendor(Vendor updatedVendor, int id) {
-        if (updatedVendor.getId() > 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id field forbidden");
+        if (updatedVendor.getId() > 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id field forbidden");
+        }
         Vendor savedVendor = getVendorById(id);
 
         savedVendor.setName(updatedVendor.getName());
@@ -45,8 +69,4 @@ public class VendorServiceImpl implements VendorService{
 
         return vendorRepository.save(savedVendor);
     }
-
-
-
-
 }
