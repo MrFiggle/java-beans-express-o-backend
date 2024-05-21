@@ -56,4 +56,8 @@ public class ProductServiceImplTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("No products found.", exception.getReason());
     }
+    @Test
+    public void createProduct_withValidProduct_returnsPersistedProduct(){
+
+    }
 }
