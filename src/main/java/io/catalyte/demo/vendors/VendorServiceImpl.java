@@ -1,14 +1,11 @@
 package io.catalyte.demo.vendors;
-import io.catalyte.demo.util.TimeStamp;
 
+import io.catalyte.demo.util.TimeStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Service
@@ -30,10 +27,9 @@ public class VendorServiceImpl implements VendorService{
 
     @Override
     public Vendor editVendor(Vendor updatedVendor, int id) {
-        if (updatedVendor.getId() > 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "id field forbidden");
-        Vendor savedVendor = getVendorById(id);       //should throw 404 error if not found
+        if (updatedVendor.getId() > 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id field forbidden");
+        Vendor savedVendor = getVendorById(id);
 
-        //update
         savedVendor.setName(updatedVendor.getName());
         savedVendor.setStreet1(updatedVendor.getStreet1());
         savedVendor.setStreet2(updatedVendor.getStreet2());
