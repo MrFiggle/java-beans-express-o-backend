@@ -1,4 +1,4 @@
-package io.catalyte.demo.categories;
+package io.catalyte.demo.products;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class ProductServiceImplTest {
         productsInDataBase = new ArrayList<>();
         productsInDataBase.add(new Product(true, "Description", "Name", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
         productsInDataBase.add(new Product(true, "hi", "Latte", "imgUrl", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
-        productsInDataBase.add(new Product(true, "hi", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(false, "hello", "Latte", "imgURL", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(1.23)));
     }
     @Test
     public void getProductByName_withValidName_returnsArrayWith2Products(){
@@ -53,7 +53,6 @@ public class ProductServiceImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             productService.getProductByName("Candy");
         });
-
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("No products found.", exception.getReason());
     }

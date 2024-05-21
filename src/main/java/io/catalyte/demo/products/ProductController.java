@@ -1,4 +1,4 @@
-package io.catalyte.demo.categories;
+package io.catalyte.demo.products;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

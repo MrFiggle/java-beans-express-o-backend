@@ -1,4 +1,4 @@
-package io.catalyte.demo.categories;
+package io.catalyte.demo.products;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

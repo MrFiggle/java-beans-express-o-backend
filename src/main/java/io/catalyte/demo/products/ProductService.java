@@ -1,4 +1,4 @@
-package io.catalyte.demo.categories;
+package io.catalyte.demo.products;
 
 import java.util.List;
 
