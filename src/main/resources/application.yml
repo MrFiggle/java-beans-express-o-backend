@@ -1,2 +1,18 @@
 server:
   port: 8085
+  error:
+    include-message: always
+spring:
+
+  jpa:
+
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update #create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    driverClassName: org.postgresql.Driver
