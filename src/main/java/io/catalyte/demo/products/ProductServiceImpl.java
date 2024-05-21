@@ -9,21 +9,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Implementation of the ProductService interface.
+ * Provides functionality related to managing products.
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
-
+    /**
+     * Creates an instance of the service with the provided instance of the repository
+     * @param productRepository the repository to be used by this service
+     */
     @Autowired
     public ProductServiceImpl( ProductRepository productRepository ) {
         this.productRepository = productRepository;
     }
-
+    /**
+     * Retrieves a list of products with the specified name.
+     * @param name The name of the products to search for
+     * @return a list of products with the specified name
+     * @throws ResponseStatusException if name is empty/null, or if no products are found
+     */
     @Override
     public List<Product> getProductByName(String name) {
         if (Objects.equals(name, "") || name == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is required.");
         }
-
         List<Product> products = productRepository.findAll();
         ArrayList<Product> matchedProducts = new ArrayList<>();
         for (Product product : products) {
