@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,6 +59,8 @@ public class ProductServiceImplTest {
     }
     @Test
     public void createProduct_withValidProduct_returnsPersistedProduct(){
-
+        when(productRepository.save(any(Product.class))).thenReturn(productsInDataBase.get(1));
+        Product results = productService.createProduct(productsInDataBase.get(1));
+        assertEquals(productsInDataBase.get(1).getId(),results.getId());
     }
 }

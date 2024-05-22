@@ -10,7 +10,7 @@ import java.util.List;
  * Provides endpoints for retrieving, creating, updating, and deleting products.
  */
 @RestController
-@RequestMapping ( value = "/api/products" )
+@RequestMapping ( value = "/products" )
 public class ProductController {
   ProductService productService;
 

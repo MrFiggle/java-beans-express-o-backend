@@ -77,7 +77,7 @@ public class Product {
     this.cost = vendorPrice;
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
-    this.salePrice = BigDecimal.valueOf(vendorPrice.intValue() * (markupPercentage/100)) ;
+    this.salePrice = BigDecimal.valueOf(vendorPrice.intValue() * ((markupPercentage/100)+1)) ;
   }
   /**
    * Retrieves the active status of the product.
