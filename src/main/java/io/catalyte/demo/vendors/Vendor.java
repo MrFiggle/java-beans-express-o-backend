@@ -1,7 +1,5 @@
 package io.catalyte.demo.vendors;
 
-
-
 import io.catalyte.demo.util.TimeStamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +25,13 @@ public class Vendor {
     private String createdTimestamp;
     private String editedTimestamp;
 
+    public Vendor() {
+        TimeStamp timeStamp = new TimeStamp();
+        this.createdTimestamp = timeStamp.getTimeStamp();
+        this.editedTimestamp = timeStamp.getTimeStamp();
+    }
 
-    public Vendor(String contactPhone, String contactTitle, String contactName, String contactEmail, String zip, String city, String state, String street2, String street1, String name) {
+    public Vendor(String name, String street1, String street2, String city, String state, String zip, String contactName, String contactTitle, String contactPhone, String contactEmail) {
         this.contactPhone = contactPhone;
         this.contactTitle = contactTitle;
         this.contactName = contactName;
@@ -41,113 +44,90 @@ public class Vendor {
         this.name = name;
 
         TimeStamp timeStamp = new TimeStamp();
-        String ts = timeStamp.getTimeStamp();
-        this.createdTimestamp = ts;
-        this.editedTimestamp = ts;
+        this.createdTimestamp = timeStamp.getTimeStamp();
+        this.editedTimestamp = timeStamp.getTimeStamp();
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
+    public String getName() {return name;}
+    public String getStreet1() {return street1;}
+    public String getStreet2() {return street2;}
+    public String getState() {return state;}
+    public String getCity() {return city;}
+    public String getContactEmail() {return contactEmail;}
+    public String getZip() {return zip;}
+    public String getContactName() {return contactName;}
+    public String getContactTitle() {return contactTitle;}
+    public String getContactPhone() {return contactPhone;}
+    public String getCreatedTimestamp() {return createdTimestamp;}
+    public String getEditedTimestamp() {return editedTimestamp;}
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
+        this.updateEditTime();
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getStreet1() {
-        return street1;
+        this.updateEditTime();
     }
 
     public void setStreet1(String street1) {
         this.street1 = street1;
-    }
-
-    public String getStreet2() {
-        return street2;
+        this.updateEditTime();
     }
 
     public void setStreet2(String street2) {
         this.street2 = street2;
-    }
-
-    public String getState() {
-        return state;
+        this.updateEditTime();
     }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getCity() {
-        return city;
+        this.updateEditTime();
     }
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getZip() {
-        return zip;
+        this.updateEditTime();
     }
 
     public void setZip(String zip) {
         this.zip = zip;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
+        this.updateEditTime();
     }
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
-    }
-
-    public String getContactName() {
-        return contactName;
+        this.updateEditTime();
     }
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
-    }
-
-    public String getContactTitle() {
-        return contactTitle;
+        this.updateEditTime();
     }
 
     public void setContactTitle(String contactTitle) {
         this.contactTitle = contactTitle;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
+        this.updateEditTime();
     }
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
+        this.updateEditTime();
     }
 
-    public String getCreatedTimestamp() {
-        return createdTimestamp;
-    }
-
-    public void setCreatedTimestamp(String createdTimestamp) {
+    private void setCreatedTimestamp(String createdTimestamp) {
         this.createdTimestamp = createdTimestamp;
     }
 
-    public String getEditedTimestamp() {
-        return editedTimestamp;
+    private void setEditedTimestamp(String editedTimestamp) {
+        this.editedTimestamp = editedTimestamp;
     }
 
-    public void setEditedTimestamp(String editedTimestamp) {
-        this.editedTimestamp = editedTimestamp;
+    private void updateEditTime() {
+        TimeStamp timeStamp = new TimeStamp();
+        this.setEditedTimestamp(timeStamp.getTimeStamp());
     }
 
 }
