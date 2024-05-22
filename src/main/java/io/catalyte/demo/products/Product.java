@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import io.catalyte.demo.util.TimeStamp;
 
 /**
  * Represents a product entity in the application.
@@ -27,9 +28,12 @@ public class Product {
   private ArrayList<AllergenList> allergens;
   private int markupPercentage;
   private BigDecimal salePrice;
-  private int createdTimestamp;
-  private int editedTimestamp;
+  private String createdTimestamp;
+  private String editedTimestamp;
 
+  /**
+   * Creates an instance of the product with no values
+   */
   public Product() {
   }
   /**
@@ -54,9 +58,13 @@ public class Product {
     this.cost = costToProduce;
     this.allergens = allergens;
     this.salePrice = salePrice;
+    TimeStamp timeStamp = new TimeStamp();
+    String ts = timeStamp.getTimeStamp();
+    this.createdTimestamp = ts;
+    this.editedTimestamp = ts;
   }
   /**
-   * Creates an instance of Product (specifically Backed goods) with the provided fields
+   * Creates an instance of Product (specifically Baked goods) with the provided fields
    * @param active Boolean value to determine active status of the product.
    * @param description String value that describes the product.
    * @param name The name of the product
@@ -79,6 +87,10 @@ public class Product {
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
     this.salePrice = salePrice;
+    TimeStamp timeStamp = new TimeStamp();
+    String ts = timeStamp.getTimeStamp();
+    this.createdTimestamp = ts;
+    this.editedTimestamp = ts;
   }
   /**
    * Retrieves the active status of the product.
@@ -163,6 +175,7 @@ public class Product {
    */
   public void setActive(Boolean active) {
     this.active = active;
+    this.updateEditTime();
   }
   /**
    * Sets the description of the product.
@@ -170,6 +183,7 @@ public class Product {
    */
   public void setDescription(String description) {
     this.description = description;
+    this.updateEditTime();
   }
   /**
    * Sets the name of the product.
@@ -177,6 +191,7 @@ public class Product {
    */
   public void setName(String name) {
     this.name = name;
+    this.updateEditTime();
   }
   /**
    * Sets the vendor id of the product.
@@ -184,6 +199,7 @@ public class Product {
    */
   public void setVendorId(int vendorId) {
     this.vendorId = vendorId;
+    this.updateEditTime();
   }
   /**
    * Sets the list of ingredients of the product.
@@ -191,6 +207,7 @@ public class Product {
    */
   public void setIngredients(ArrayList<String> ingredients) {
     this.ingredients = ingredients;
+    this.updateEditTime();
   }
   /**
    * Sets the classification of the product.
@@ -198,6 +215,7 @@ public class Product {
    */
   public void setClassification(ProductType classification) {
     this.classification = classification;
+    this.updateEditTime();
   }
   /**
    * Sets the drink type of the product.
@@ -205,6 +223,7 @@ public class Product {
    */
   public void setDrinkType(DrinkType drinkType) {
     this.drinkType = drinkType;
+    this.updateEditTime();
   }
   /**
    * Sets the cost of the product.
@@ -212,6 +231,7 @@ public class Product {
    */
   public void setCost(BigDecimal cost) {
     this.cost = cost;
+    this.updateEditTime();
   }
   /**
    * Sets the allergens list  of the product
@@ -219,6 +239,7 @@ public class Product {
    */
   public void setAllergens(ArrayList<AllergenList> allergens) {
     this.allergens = allergens;
+    this.updateEditTime();
   }
   /**
    * Sets the sale price of the product.
@@ -226,6 +247,7 @@ public class Product {
    */
   public void setSalePrice(BigDecimal salePrice) {
     this.salePrice = salePrice;
+    this.updateEditTime();
   }
   /**
    * Sets the markup percentage of the product
@@ -233,6 +255,7 @@ public class Product {
    */
   public void setMarkupPercentage(int markupPercentage) {
     this.markupPercentage = markupPercentage;
+    this.updateEditTime();
   }
   /**
    * Retrieves the id of the product
@@ -247,13 +270,13 @@ public class Product {
    */
   public void setId(int id) {
     this.id = id;
+    this.updateEditTime();
   }
-
   /**
    * Retrieves  the created timestamp of the product
    * @return the created timestamp of the product
    */
-  public int getCreatedTimestamp() {
+  public String getCreatedTimestamp() {
     return createdTimestamp;
   }
 
@@ -261,7 +284,7 @@ public class Product {
    * Retrieves the edited timestamp of the product
    * @return the edited timestamp of the product
    */
-  public int getEditedTimestamp() {
+  public String getEditedTimestamp() {
     return editedTimestamp;
   }
 
@@ -269,7 +292,7 @@ public class Product {
    * Sets the created timestamp of the product
    * @param createdTimestamp the created timestamp of the product
    */
-  public void setCreatedTimestamp(int createdTimestamp) {
+  public void setCreatedTimestamp(String createdTimestamp) {
     this.createdTimestamp = createdTimestamp;
   }
 
@@ -277,8 +300,13 @@ public class Product {
    * Sets the edited timestamp of the product
    * @param editedTimestamp the edited timestamp of the product
    */
-  public void setEditedTimestamp(int editedTimestamp) {
+  public void setEditedTimestamp(String editedTimestamp) {
     this.editedTimestamp = editedTimestamp;
   }
+  private void updateEditTime() {
+    TimeStamp timeStamp = new TimeStamp();
+    this.setEditedTimestamp(timeStamp.getTimeStamp());
+  }
+
 }
 
