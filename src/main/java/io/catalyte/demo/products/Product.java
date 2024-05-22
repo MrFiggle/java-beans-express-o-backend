@@ -27,6 +27,8 @@ public class Product {
   private ArrayList<AllergenList> allergens;
   private int markupPercentage;
   private BigDecimal salePrice;
+  private int createdTimestamp;
+  private int editedTimestamp;
 
   /**
    * Creates an instance of the product with no values
@@ -43,8 +45,9 @@ public class Product {
    * @param drinkType An Enum value to determine the type of drink the product is.
    * @param costToProduce BigDecimal value of the cost to make the product.
    * @param allergens A list of allergens that product contains
+   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens) {
+  public Product(Boolean active, String description, String name, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens, BigDecimal salePrice) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -53,7 +56,7 @@ public class Product {
     this.classification = classification;
     this.cost = costToProduce;
     this.allergens = allergens;
-    this.salePrice = costToProduce;
+    this.salePrice = salePrice;
   }
   /**
    * Creates an instance of Product (specifically Baked goods) with the provided fields
@@ -66,8 +69,9 @@ public class Product {
    * @param vendorPrice BigDecimal value of the cost to purchase
    * @param allergens A list of allergens that product contains
    * @param markupPercentage Integer value of the markup percentage
+   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage) {
+  public Product(Boolean active, String description, String name, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage, BigDecimal salePrice) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -77,7 +81,7 @@ public class Product {
     this.cost = vendorPrice;
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
-    this.salePrice = BigDecimal.valueOf(vendorPrice.intValue() * ((markupPercentage/100)+1)) ;
+    this.salePrice = salePrice;
   }
   /**
    * Retrieves the active status of the product.
@@ -247,5 +251,37 @@ public class Product {
   public void setId(int id) {
     this.id = id;
   }
+  /**
+   * Retrieves  the created timestamp of the product
+   * @return the created timestamp of the product
+   */
+  public int getCreatedTimestamp() {
+    return createdTimestamp;
+  }
+
+  /**
+   * Retrieves the edited timestamp of the product
+   * @return the edited timestamp of the product
+   */
+  public int getEditedTimestamp() {
+    return editedTimestamp;
+  }
+
+  /**
+   * Sets the created timestamp of the product
+   * @param createdTimestamp the created timestamp of the product
+   */
+  public void setCreatedTimestamp(int createdTimestamp) {
+    this.createdTimestamp = createdTimestamp;
+  }
+
+  /**
+   * Sets the edited timestamp of the product
+   * @param editedTimestamp the edited timestamp of the product
+   */
+  public void setEditedTimestamp(int editedTimestamp) {
+    this.editedTimestamp = editedTimestamp;
+  }
+
 }
 
