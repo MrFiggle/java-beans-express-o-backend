@@ -37,5 +37,10 @@ public class VendorController {
         return vendorService.createVendor(vendorToCreate);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Vendor getVendorById(@PathVariable int id) {
+        return vendorService.getVendorById(id);
+    }
 
 }
