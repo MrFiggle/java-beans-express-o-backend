@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoriesControllerTBD {
+public class CategoriesController {
 
   private static int idCounter = 1;
   private static List<Category> categories = new ArrayList<>();
