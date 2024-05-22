@@ -27,9 +27,9 @@ public class VendorServiceImplTests {
     @BeforeEach
     public void setUp() {
         vendorService = new VendorServiceImpl(vendorRepository);
-        testVendor = new Vendor("name", "address street 1", "address street 2", "state", "city", "zip", "contact email", "contact name", "contact title", "contact phone", "new timestamp");
+        testVendor = new Vendor("name", "address street 1", "address street 2", "state", "city", "zip", "contact email", "contact name", "contact title", "contact phone");
         testVendor.setId(1);
-        testVendor2 = new Vendor("name 2", "address 2 street 1", "address 2 street 2", "state 2", "city 2", "zip 2", "contact email 2", "contact name 2", "contact title 2", "contact phone 2", "updated timestamp");
+        testVendor2 = new Vendor("name 2", "address 2 street 1", "address 2 street 2", "state 2", "city 2", "zip 2", "contact email 2", "contact name 2", "contact title 2", "contact phone 2");
 
     }
 

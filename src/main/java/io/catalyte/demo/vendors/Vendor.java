@@ -2,6 +2,7 @@ package io.catalyte.demo.vendors;
 
 
 
+import io.catalyte.demo.util.TimeStamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,28 +24,27 @@ public class Vendor {
     private String contactName;
     private String contactTitle;
     private String contactPhone;
-
+    private String createdTimestamp;
     private String editedTimestamp;
 
-    public Vendor(String name, String street1, String street2, String state, String city, String zip, String contactEmail, String contactName, String contactTitle, String contactPhone, String editedTimestamp) {
-        this.name = name;
-        this.street1 = street1;
-        this.street2 = street2;
-        this.state = state;
-        this.city = city;
-        this.zip = zip;
-        this.contactEmail = contactEmail;
-        this.contactName = contactName;
-        this.contactTitle = contactTitle;
+
+    public Vendor(String contactPhone, String contactTitle, String contactName, String contactEmail, String zip, String city, String state, String street2, String street1, String name) {
         this.contactPhone = contactPhone;
-        this.editedTimestamp = editedTimestamp;
-    }
+        this.contactTitle = contactTitle;
+        this.contactName = contactName;
+        this.contactEmail = contactEmail;
+        this.zip = zip;
+        this.city = city;
+        this.state = state;
+        this.street2 = street2;
+        this.street1 = street1;
+        this.name = name;
 
-    public Vendor() {
+        TimeStamp timeStamp = new TimeStamp();
+        String ts = timeStamp.getTimeStamp();
+        this.createdTimestamp = ts;
+        this.editedTimestamp = ts;
     }
-
-    public String getEditedTimestamp() {return this.editedTimestamp;}
-    public void setEditedTimestamp(String newTime) {this.editedTimestamp=newTime;}
 
     public int getId() {
         return id;
@@ -133,4 +133,21 @@ public class Vendor {
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
     }
+
+    public String getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(String createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public String getEditedTimestamp() {
+        return editedTimestamp;
+    }
+
+    public void setEditedTimestamp(String editedTimestamp) {
+        this.editedTimestamp = editedTimestamp;
+    }
+
 }
