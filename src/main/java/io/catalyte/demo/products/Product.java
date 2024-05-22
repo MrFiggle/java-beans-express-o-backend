@@ -62,7 +62,6 @@ public class Product {
     String ts = timeStamp.getTimeStamp();
     this.createdTimestamp = ts;
     this.editedTimestamp = ts;
-
   }
   /**
    * Creates an instance of Product (specifically Baked goods) with the provided fields
@@ -92,7 +91,6 @@ public class Product {
     String ts = timeStamp.getTimeStamp();
     this.createdTimestamp = ts;
     this.editedTimestamp = ts;
-
   }
   /**
    * Retrieves the active status of the product.
