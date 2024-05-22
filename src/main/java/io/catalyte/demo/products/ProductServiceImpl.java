@@ -47,4 +47,13 @@ public class ProductServiceImpl implements ProductService {
         }
         return matchedProducts;
     }
+    /**
+     * Creates a new product.
+     * @param productToCreate the product to create
+     * @return the created product
+     */
+    @Override
+    public Product createProduct(Product productToCreate) {
+        return productRepository.save(productToCreate);
+    }
 }

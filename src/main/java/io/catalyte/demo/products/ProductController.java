@@ -33,5 +33,15 @@ public class ProductController {
   public List<Product> getProductByName(@RequestParam String name) {
     return productService.getProductByName(name);
   }
+  /**
+   * Creates a new product.
+   * @param productToCreate the product to create
+   * @return the created product
+   */
+  @PostMapping
+  @ResponseStatus( HttpStatus.CREATED )
+  public Product createProduct( @RequestBody Product productToCreate ) {
+    return productService.createProduct( productToCreate );
+  }
 
 }
