@@ -64,8 +64,6 @@ public class VendorServiceImpl implements VendorService {
         savedVendor.setContactName(updatedVendor.getContactName());
         savedVendor.setContactPhone(updatedVendor.getContactPhone());
         savedVendor.setContactTitle(updatedVendor.getContactTitle());
-        TimeStamp timeStamp = new TimeStamp();
-        savedVendor.setEditedTimestamp(timeStamp.getTimeStamp());
 
         return vendorRepository.save(savedVendor);
     }
