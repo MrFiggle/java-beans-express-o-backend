@@ -2,12 +2,13 @@ server:
   port: 8085
   error:
     include-message: always
-
 spring:
+
   jpa:
+
     database: POSTGRESQL
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update #create-drop
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     platform: postgres
