@@ -3,9 +3,8 @@ package io.catalyte.demo.util;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class TimeStamp {
-    
+
     public TimeStamp(){}
 
     /**

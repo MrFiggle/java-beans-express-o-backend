@@ -8,9 +8,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Objects;
 import java.util.Optional;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class VendorServiceImplTests {
@@ -47,6 +51,26 @@ public class VendorServiceImplTests {
                 "424-424-4242");
     }
 
+    @Test
+    public void createVendor_withValidVendor_returnsPersistedVendor() {
+        LocalDateTime dummyDate = LocalDateTime.of(1939, Month.MARCH, 30, 12, 00, 00);
+        when(vendorRepository.save(any(Vendor.class))).thenAnswer(invocation -> {
+            Vendor vendor = invocation.getArgument(0);
+            vendor.setId(1);
+            return vendor;
+        });
+
+        Vendor vendorResult = vendorService.createVendor(testVendor);
+
+        assertNotNull(vendorResult);
+        assertEquals(1, vendorResult.getId());
+        assertEquals("Wayne Enterprises", vendorResult.getName());
+        assertEquals(dummyDate, vendorResult.getCreatedTimestamp());
+        assertEquals(dummyDate, vendorResult.getEditedTimestamp());
+
+        verify(vendorRepository, times(1)).save(any(Vendor.class));
+
+    }
 
     @Test
     public void editVendor_validVendor_returnsPersistedVendor() {
@@ -68,6 +92,7 @@ public class VendorServiceImplTests {
         if (!Objects.equals(result.getContactEmail(), testVendor2.getContactEmail())) fail();
 
 
+
         assertTrue(true);
 
     }
@@ -75,7 +100,6 @@ public class VendorServiceImplTests {
     @Test
     public void editVendor_invalidId_throwsResponseException() {
         when(vendorRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
-
         boolean exceptionFound = false;
         try {
             vendorService.editVendor(testVendor2, -1);

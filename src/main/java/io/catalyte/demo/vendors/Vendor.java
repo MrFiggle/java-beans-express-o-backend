@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/**
+ * Represents a vendor entity with various attributes such as name, address, contact information,
+ * and timestamps for creation and modification.
+ */
 @Entity
 public class Vendor {
 
@@ -121,11 +125,11 @@ public class Vendor {
         this.createdTimestamp = createdTimestamp;
     }
 
-    private void setEditedTimestamp(String editedTimestamp) {
+    public void setEditedTimestamp(String editedTimestamp) {
         this.editedTimestamp = editedTimestamp;
     }
 
-    private void updateEditTime() {
+    public void updateEditTime() {
         TimeStamp timeStamp = new TimeStamp();
         this.setEditedTimestamp(timeStamp.getTimeStamp());
     }
