@@ -1,6 +1,6 @@
 package io.catalyte.demo.categories;
 
-public class Category {
+public class CategoryTBD {
 
   private int id;
   private String name;
