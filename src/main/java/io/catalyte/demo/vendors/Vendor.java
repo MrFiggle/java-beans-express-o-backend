@@ -40,6 +40,9 @@ public class Vendor {
         this.editedTimestamp = editedTimestamp;
     }
 
+    public Vendor() {
+    }
+
     public String getEditedTimestamp() {return this.editedTimestamp;}
     public void setEditedTimestamp(String newTime) {this.editedTimestamp=newTime;}
 
