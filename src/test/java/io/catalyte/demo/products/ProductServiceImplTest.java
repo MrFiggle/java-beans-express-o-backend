@@ -28,15 +28,16 @@ public class ProductServiceImplTest {
     public void setUp(){
         productService = new ProductServiceImpl(productRepository);
         productsInDataBase = new ArrayList<>();
-        productsInDataBase.add(new Product(true, "Description", "Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
-        productsInDataBase.add(new Product(true, "hi", "Latte", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
-        productsInDataBase.add(new Product(false, "hello", "Latte", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>()));
+        productsInDataBase.add(new Product(true, "Description", "Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(true, "hi", "Latte Drink", new ArrayList<String>(), ProductType.DRINK, DrinkType.COFFEE, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(5.67)));
+        productsInDataBase.add(new Product(false, "hello", "Latte", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(12.56), new ArrayList<AllergenList>(), BigDecimal.valueOf(1.23)));
     }
     @Test
     public void getProductByName_withValidName_returnsArrayWith2Products(){
         when(productRepository.findAll()).thenReturn(productsInDataBase);
-        List<Product> result = productService.getProductByName("latte");
+        productsInDataBase.remove(2);
         productsInDataBase.remove(0);
+        List<Product> result = productService.getProductByName("latte drink");
         assertEquals(productsInDataBase, result);
     }
     @Test
