@@ -27,9 +27,9 @@ public class VendorServiceImplTests {
     @BeforeEach
     public void setUp() {
         vendorService = new VendorServiceImpl(vendorRepository);
-        testVendor = new Vendor("name", "address street 1", "address street 2", "state", "city","zip", "contact email", "contact name", "contact title", "contact phone","new timestamp");
+        testVendor = new Vendor("name", "address street 1", "address street 2", "state", "city", "zip", "contact email", "contact name", "contact title", "contact phone", "new timestamp");
         testVendor.setId(1);
-        testVendor2 = new Vendor("name 2","address 2 street 1", "address 2 street 2", "state 2", "city 2","zip 2", "contact email 2", "contact name 2", "contact title 2", "contact phone 2", "updated timestamp");
+        testVendor2 = new Vendor("name 2", "address 2 street 1", "address 2 street 2", "state 2", "city 2", "zip 2", "contact email 2", "contact name 2", "contact title 2", "contact phone 2", "updated timestamp");
 
     }
 
@@ -42,16 +42,16 @@ public class VendorServiceImplTests {
         Vendor result = vendorService.editVendor(testVendor2, testVendor.getId());
 
         if (result.getId() != testVendor.getId()) fail();
-        if (!Objects.equals(result.getName(), testVendor2.getName()))fail();
-        if (!Objects.equals(result.getStreet1(), testVendor2.getStreet1()))fail();
-        if (!Objects.equals(result.getStreet2(), testVendor2.getStreet2()))fail();
-        if (!Objects.equals(result.getCity(), testVendor2.getCity()))fail();
-        if (!Objects.equals(result.getState(), testVendor2.getState()))fail();
-        if (!Objects.equals(result.getZip(), testVendor2.getZip()))fail();
-        if (!Objects.equals(result.getContactName(), testVendor2.getContactName()))fail();
-        if (!Objects.equals(result.getContactTitle(), testVendor2.getContactTitle()))fail();
-        if (!Objects.equals(result.getContactPhone(), testVendor2.getContactPhone()))fail();
-        if (!Objects.equals(result.getContactEmail(), testVendor2.getContactEmail()))fail();
+        if (!Objects.equals(result.getName(), testVendor2.getName())) fail();
+        if (!Objects.equals(result.getStreet1(), testVendor2.getStreet1())) fail();
+        if (!Objects.equals(result.getStreet2(), testVendor2.getStreet2())) fail();
+        if (!Objects.equals(result.getCity(), testVendor2.getCity())) fail();
+        if (!Objects.equals(result.getState(), testVendor2.getState())) fail();
+        if (!Objects.equals(result.getZip(), testVendor2.getZip())) fail();
+        if (!Objects.equals(result.getContactName(), testVendor2.getContactName())) fail();
+        if (!Objects.equals(result.getContactTitle(), testVendor2.getContactTitle())) fail();
+        if (!Objects.equals(result.getContactPhone(), testVendor2.getContactPhone())) fail();
+        if (!Objects.equals(result.getContactEmail(), testVendor2.getContactEmail())) fail();
 
 
         assertTrue(true);
@@ -62,13 +62,26 @@ public class VendorServiceImplTests {
     public void editVendor_invalidId_throwsResponseException() {
         when(vendorRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
 
-        boolean exceptionFound=false;
+        boolean exceptionFound = false;
         try {
-            vendorService.getVendorById(1);
-        } catch(ResponseStatusException e) {
-            exceptionFound=true;
+            vendorService.editVendor(testVendor2, -1);
+        } catch (ResponseStatusException e) {
+            exceptionFound = true;
         }
         assertTrue(exceptionFound);
     }
 
+    @Test
+    public void editVendor_idInBody_throwsResponseException() {
+
+        testVendor2.setId(1);
+        boolean exceptionFound = false;
+        try {
+            vendorService.editVendor(testVendor2, 1);
+        } catch (ResponseStatusException e) {
+            exceptionFound = true;
+        }
+        assertTrue(exceptionFound);
+
+    }
 }
