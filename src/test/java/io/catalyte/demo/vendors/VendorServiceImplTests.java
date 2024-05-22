@@ -5,12 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Objects;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -27,10 +24,27 @@ public class VendorServiceImplTests {
     @BeforeEach
     public void setUp() {
         vendorService = new VendorServiceImpl(vendorRepository);
-        testVendor = new Vendor("name", "address street 1", "address street 2", "state", "city", "zip", "contact email", "contact name", "contact title", "contact phone");
+        testVendor = new Vendor("Wayne Enterprises",
+                "123 Fake St",
+                "456 Imaginary Ave",
+                "Gotham City",
+                "New York",
+                "11223",
+                "Bruce Wayne",
+                "b@man.com",
+                "CEO",
+                "555-555-5555");
         testVendor.setId(1);
-        testVendor2 = new Vendor("name 2", "address 2 street 1", "address 2 street 2", "state 2", "city 2", "zip 2", "contact email 2", "contact name 2", "contact title 2", "contact phone 2");
-
+        testVendor2 = new Vendor("Stark Industries",
+                "10880 Malibu Point",
+                "",
+                "Malibu",
+                "California",
+                "90263",
+                "Tony Stark",
+                "I@mIronman.com",
+                "CEO",
+                "424-424-4242");
     }
 
 
