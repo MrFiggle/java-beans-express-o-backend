@@ -282,6 +282,5 @@ public class Product {
   public void setEditedTimestamp(int editedTimestamp) {
     this.editedTimestamp = editedTimestamp;
   }
-
 }
 
