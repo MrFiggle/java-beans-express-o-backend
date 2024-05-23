@@ -35,6 +35,10 @@ public class Product {
    * Creates an instance of the product with no values
    */
   public Product() {
+    TimeStamp timeStamp = new TimeStamp();
+    String ts = timeStamp.getTimeStamp();
+    this.createdTimestamp = ts;
+    this.editedTimestamp = ts;
   }
   /**
    * Creates an instance of Product (specifically drinks) with the provided fields
