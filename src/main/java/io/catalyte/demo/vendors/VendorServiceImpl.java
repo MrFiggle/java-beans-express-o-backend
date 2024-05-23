@@ -5,10 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Implementation of the VendorService interface for handling CRUD operations on Vendor entities.
+ */
 @Service
 public class VendorServiceImpl implements VendorService {
 
@@ -24,11 +25,14 @@ public class VendorServiceImpl implements VendorService {
         this.vendorRepository = vendorRepository;
     }
 
+    /**
+     * Creates a new vendor.
+     *
+     * @param vendorToCreate the vendor to create
+     * @return the created vendor
+     */
     public Vendor createVendor(Vendor vendorToCreate) {
-
-        LocalDateTime now = LocalDateTime.now();
         vendorRepository.save(vendorToCreate);
-
         return vendorToCreate;
     }
 

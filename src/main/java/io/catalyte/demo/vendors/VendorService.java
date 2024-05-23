@@ -1,8 +1,32 @@
 package io.catalyte.demo.vendors;
 
+/**
+ * Service interface for handling CRUD operations on Vendor entities.
+ */
 public interface VendorService {
-    public Vendor getVendorById(int id);
-    public Vendor editVendor(Vendor updatedVendor, int id);
-    public Vendor createVendor(Vendor vendorToCreate);
 
+    /**
+     * Retrieves a vendor by its ID.
+     *
+     * @param id the ID of the vendor to retrieve
+     * @return the vendor with the specified ID
+     */
+    public Vendor getVendorById(int id);
+
+    /**
+     * Updates an existing vendor.
+     *
+     * @param updatedVendor the updated vendor details
+     * @param id            the ID of the vendor to update
+     * @return the updated vendor
+     */
+    public Vendor editVendor(Vendor updatedVendor, int id);
+
+    /**
+     * Creates a new vendor.
+     *
+     * @param vendorToCreate the vendor to create
+     * @return the created vendor
+     */
+    public Vendor createVendor(Vendor vendorToCreate);
 }

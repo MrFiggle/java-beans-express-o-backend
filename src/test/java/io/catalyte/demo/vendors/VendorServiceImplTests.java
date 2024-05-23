@@ -1,5 +1,6 @@
 package io.catalyte.demo.vendors;
 
+import io.catalyte.demo.util.TimeStamp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,8 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Objects;
 import java.util.Optional;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,7 +52,9 @@ public class VendorServiceImplTests {
 
     @Test
     public void createVendor_withValidVendor_returnsPersistedVendor() {
-        LocalDateTime dummyDate = LocalDateTime.of(1939, Month.MARCH, 30, 12, 00, 00);
+
+        TimeStamp dummyDate = new TimeStamp();
+
         when(vendorRepository.save(any(Vendor.class))).thenAnswer(invocation -> {
             Vendor vendor = invocation.getArgument(0);
             vendor.setId(1);
@@ -65,8 +66,8 @@ public class VendorServiceImplTests {
         assertNotNull(vendorResult);
         assertEquals(1, vendorResult.getId());
         assertEquals("Wayne Enterprises", vendorResult.getName());
-        assertEquals(dummyDate, vendorResult.getCreatedTimestamp());
-        assertEquals(dummyDate, vendorResult.getEditedTimestamp());
+        assertEquals(dummyDate.getTimeStamp(), vendorResult.getCreatedTimestamp());
+        assertEquals(dummyDate.getTimeStamp(), vendorResult.getEditedTimestamp());
 
         verify(vendorRepository, times(1)).save(any(Vendor.class));
 
@@ -95,6 +96,20 @@ public class VendorServiceImplTests {
 
         assertTrue(true);
 
+    }
+
+    @Test
+    public void getVendorById() {
+
+        testVendor.setId(1);
+
+        when(vendorRepository.findById(testVendor.getId())).thenReturn(Optional.of(testVendor));
+
+        Vendor foundVendor = vendorService.getVendorById(testVendor.getId());
+
+        assertNotNull(foundVendor);
+        assertEquals(testVendor.getId(), foundVendor.getId());
+        assertEquals(testVendor.getName(), foundVendor.getName());
     }
 
     @Test
