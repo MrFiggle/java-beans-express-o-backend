@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Implementation of the ProductService interface.
@@ -55,5 +56,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(Product productToCreate) {
         return productRepository.save(productToCreate);
+    }
+    /**
+     * Retrieves a product with the specified id.
+     * @param id the id of the product to search for
+     * @return the product with the specified id
+     */
+    @Override
+    public Product getProductById(int id) {
+        Optional<Product> potentialProduct = productRepository.findById(id);
+        if (potentialProduct.isPresent()) {
+            return potentialProduct.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No product found.");
+        }
     }
 }

@@ -31,7 +31,7 @@ public class ProductController {
   @GetMapping
   @ResponseStatus( HttpStatus.OK )
   public List<Product> getProductByName(@RequestParam String name) {
-    return productService.getProductByName(name);
+    return productService.getProductByName( name );
   }
   /**
    * Creates a new product.
@@ -43,5 +43,14 @@ public class ProductController {
   public Product createProduct( @RequestBody Product productToCreate ) {
     return productService.createProduct( productToCreate );
   }
-
+  /**
+   * Retrieves a product with the specified id.
+   * @param id the id of the product to search for
+   * @return the product with the specified id
+   */
+  @GetMapping ("/{id}")
+  @ResponseStatus( HttpStatus.OK)
+  public Product getProductById(@PathVariable int id) {
+    return productService.getProductById( id );
+  }
 }
