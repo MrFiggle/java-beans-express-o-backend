@@ -29,12 +29,29 @@ public class Vendor {
     private String createdTimestamp;
     private String editedTimestamp;
 
+    /**
+     * Default constructor. Initializes timestamps for creation and modification.
+     */
     public Vendor() {
         TimeStamp timeStamp = new TimeStamp();
         this.createdTimestamp = timeStamp.getTimeStamp();
         this.editedTimestamp = timeStamp.getTimeStamp();
     }
 
+    /**
+     * Parameterized constructor to initialize a Vendor with the provided details.
+     *
+     * @param name         the name of the vendor
+     * @param street1      the primary street address of the vendor
+     * @param street2      the secondary street address of the vendor (optional)
+     * @param city         the city of the vendor
+     * @param state        the state of the vendor
+     * @param zip          the ZIP code of the vendor
+     * @param contactName  the name of the primary contact person for the vendor
+     * @param contactTitle the title of the primary contact person for the vendor
+     * @param contactPhone the phone number of the primary contact person for the vendor
+     * @param contactEmail the email address of the primary contact person for the vendor
+     */
     public Vendor(String name, String street1, String street2, String city, String state, String zip, String contactName, String contactTitle, String contactPhone, String contactEmail) {
         this.contactPhone = contactPhone;
         this.contactTitle = contactTitle;
@@ -129,6 +146,9 @@ public class Vendor {
         this.editedTimestamp = editedTimestamp;
     }
 
+    /**
+     * Updates the edited timestamp to the current time.
+     */
     public void updateEditTime() {
         TimeStamp timeStamp = new TimeStamp();
         this.setEditedTimestamp(timeStamp.getTimeStamp());
