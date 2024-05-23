@@ -283,7 +283,6 @@ public class Product {
   public String getCreatedTimestamp() {
     return createdTimestamp;
   }
-
   /**
    * Retrieves the edited timestamp of the product
    * @return the edited timestamp of the product
@@ -291,7 +290,6 @@ public class Product {
   public String getEditedTimestamp() {
     return editedTimestamp;
   }
-
   /**
    * Sets the created timestamp of the product
    * @param createdTimestamp the created timestamp of the product
@@ -299,7 +297,6 @@ public class Product {
   public void setCreatedTimestamp(String createdTimestamp) {
     this.createdTimestamp = createdTimestamp;
   }
-
   /**
    * Sets the edited timestamp of the product
    * @param editedTimestamp the edited timestamp of the product
@@ -311,6 +308,5 @@ public class Product {
     TimeStamp timeStamp = new TimeStamp();
     this.setEditedTimestamp(timeStamp.getTimeStamp());
   }
-
 }
 
