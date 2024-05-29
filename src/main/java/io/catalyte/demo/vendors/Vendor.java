@@ -153,5 +153,4 @@ public class Vendor {
         TimeStamp timeStamp = new TimeStamp();
         this.setEditedTimestamp(timeStamp.getTimeStamp());
     }
-
 }

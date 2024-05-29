@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,6 +34,22 @@ public class VendorServiceImpl implements VendorService {
     public Vendor createVendor(Vendor vendorToCreate) {
         vendorRepository.save(vendorToCreate);
         return vendorToCreate;
+    }
+
+    /**
+     * Retrieves all vendors
+     *
+     * @return a list of all vendors
+     * @throws ResponseStatusException if there is an internal error fetching the vendors
+     */
+    @Override
+    public List<Vendor> getAllVendors() {
+        try {
+            return vendorRepository.findAll();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "There was an internal error while fetching your data");
+        }
+
     }
 
     /**
