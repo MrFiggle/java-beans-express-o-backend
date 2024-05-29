@@ -2,6 +2,7 @@ package io.catalyte.demo.vendors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 /**
  * Controller for handling CRUD operations on Vendor entities.
@@ -57,5 +58,16 @@ public class VendorsController {
     @ResponseStatus(HttpStatus.OK)
     public Vendor editVendor(@RequestBody Vendor updatedVendor, @PathVariable int id) {
         return vendorService.editVendor(updatedVendor, id);
+    }
+
+    /**
+     * Retrieves all vendors
+     *
+     * @return a list of vendors
+     */
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Vendor> getAllVendors(){
+        return vendorService.getAllVendors();
     }
 }

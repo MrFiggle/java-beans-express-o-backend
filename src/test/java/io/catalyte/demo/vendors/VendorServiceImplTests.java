@@ -1,12 +1,15 @@
 package io.catalyte.demo.vendors;
-
 import io.catalyte.demo.util.TimeStamp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -136,5 +139,32 @@ public class VendorServiceImplTests {
         }
         assertTrue(exceptionFound);
 
+    }
+
+    @Test
+    public void getAllVendors_noArg_returnsEmptyListOfVendors(){
+        List<Vendor> list = vendorService.getAllVendors();
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void getAllVendors_noArg_returnsListOfVendors(){
+        List<Vendor> toReturn = new ArrayList<>();
+        toReturn.add(testVendor);
+        toReturn.add(testVendor2);
+        when(vendorRepository.findAll()).thenReturn(toReturn);
+        List<Vendor> list = vendorService.getAllVendors();
+        assertEquals(list.size(), 2);
+    }
+
+    @Test
+    public void getAllVendors_noArgs_throwsResponseStatusException(){
+        when(vendorRepository.findAll()).thenThrow(new ResponseStatusException(HttpStatusCode.valueOf(500)));
+        try{
+            vendorService.getAllVendors();
+        }
+        catch (Exception e){
+            assertEquals(e.getMessage(), "500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"" );
+        }
     }
 }

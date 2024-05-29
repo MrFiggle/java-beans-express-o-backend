@@ -1,5 +1,7 @@
 package io.catalyte.demo.vendors;
 
+import java.util.List;
+
 /**
  * Service interface for handling CRUD operations on Vendor entities.
  */
@@ -29,4 +31,11 @@ public interface VendorService {
      * @return the created vendor
      */
     public Vendor createVendor(Vendor vendorToCreate);
+
+    /**
+     * Retrieves all vendors
+     *
+     * @return a list of vendors
+     */
+    public List<Vendor> getAllVendors();
 }
