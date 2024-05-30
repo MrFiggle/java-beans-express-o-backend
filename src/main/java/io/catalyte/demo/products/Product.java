@@ -1,5 +1,6 @@
 package io.catalyte.demo.products;
 
+import io.catalyte.demo.util.AllergenList;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

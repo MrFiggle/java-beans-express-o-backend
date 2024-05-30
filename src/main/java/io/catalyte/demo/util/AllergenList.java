@@ -1,4 +1,4 @@
-package io.catalyte.demo.products;
+package io.catalyte.demo.util;
 
 public enum AllergenList {
     DAIRY,
