@@ -1,5 +1,6 @@
 package io.catalyte.demo.products;
 
+import io.catalyte.demo.util.AllergenList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

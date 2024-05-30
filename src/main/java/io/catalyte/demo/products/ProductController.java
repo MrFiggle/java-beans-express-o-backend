@@ -16,13 +16,12 @@ public class ProductController {
 
   /**
    * Creates an instance of the controller with the provided instance of the service
-   * @param productService the repository to be used by this controller
+   * @param productService the service to be used by this controller
    */
   @Autowired
   public ProductController(ProductService productService) {
     this.productService = productService;
   }
-
   /**
    * Retrieves a list of products with the specified name.
    * @param name The name of the products to search for
