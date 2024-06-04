@@ -22,14 +22,21 @@ public class ProductController {
   public ProductController(ProductService productService) {
     this.productService = productService;
   }
+
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<Product> getAllProducts(){
+    return productService.getAllProducts();
+  }
+
   /**
    * Retrieves a list of products with the specified name.
    * @param name The name of the products to search for
    * @return a list of products with the specified name
    */
-  @GetMapping
+  @GetMapping("/name/{name}")
   @ResponseStatus( HttpStatus.OK )
-  public List<Product> getProductByName(@RequestParam String name) {
+  public List<Product> getProductByName(@PathVariable String name) {
     return productService.getProductByName( name );
   }
   /**

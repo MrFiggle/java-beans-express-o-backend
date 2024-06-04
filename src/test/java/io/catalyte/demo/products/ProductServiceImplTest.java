@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,5 +82,20 @@ public class ProductServiceImplTest {
         });
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("No product found.", exception.getReason());
+    }
+
+    @Test
+    public void getAllProducts_withNoProducts_emptyList(){
+        productsInDataBase = new ArrayList<>();
+        lenient().when(productRepository.findAll()).thenReturn(productsInDataBase);
+        List<Product> returnedList = productService.getAllProducts();
+        assertTrue(returnedList.isEmpty());
+    }
+
+    @Test
+    public void getAllProducts_withProducts_productsList(){
+        lenient().when(productRepository.findAll()).thenReturn(productsInDataBase);
+        List<Product> returnedList = productService.getAllProducts();
+        assertEquals(returnedList, productsInDataBase);
     }
 }

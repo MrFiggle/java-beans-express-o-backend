@@ -71,4 +71,18 @@ public class ProductServiceImpl implements ProductService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No product found.");
         }
     }
+
+    /**
+     * Retrieves a list of all products.
+     *
+     * @return a list of all products
+     */
+    @Override
+    public List<Product> getAllProducts() {
+        try {
+            return productRepository.findAll();
+        } catch (ResponseStatusException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "There was an unexpected internal server issue while fetching your data");
+        }
+    }
 }
