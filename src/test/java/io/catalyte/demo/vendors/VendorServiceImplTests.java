@@ -1,5 +1,6 @@
 package io.catalyte.demo.vendors;
 import io.catalyte.demo.util.TimeStamp;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,7 @@ public class VendorServiceImplTests {
     VendorService vendorService;
     Vendor testVendor;
     Vendor testVendor2;
+    List<Vendor> myList;
 
     @BeforeEach
     public void setUp() {
@@ -51,6 +53,9 @@ public class VendorServiceImplTests {
                 "I@mIronman.com",
                 "CEO",
                 "424-424-4242");
+        myList = new ArrayList<>();
+        myList.add(testVendor);
+        myList.add(testVendor2);
     }
 
     @Test
@@ -142,6 +147,30 @@ public class VendorServiceImplTests {
     }
 
     @Test
+    public void getVendorByName_name_returnsVendor(){
+        when(vendorRepository.findAll()).thenReturn(myList);
+        Vendor myVendor = vendorService.getVendorByName(testVendor.getName());
+        assertEquals(testVendor.getName(), myVendor.getName());
+    }
+
+    @Test
+    public void getVendorByName_invalidName_throwsResponseStatusException(){
+        when(vendorRepository.findAll()).thenReturn(myList);
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            vendorService.getVendorByName("not a valid name");
+        });
+        assertEquals("404 NOT_FOUND \"The vendor you are looking for was not found\"", exception.getMessage());
+    }
+
+    @Test
+    public void getVendorByName_name_throwsResponseStatusException(){
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            vendorService.getVendorByName(null);
+        });
+        assertEquals("400 BAD_REQUEST \"The vendor name you have supplied is invalid\"", exception.getMessage());
+    }
+
+    @Test
     public void getAllVendors_noArg_returnsEmptyListOfVendors(){
         List<Vendor> list = vendorService.getAllVendors();
         assertTrue(list.isEmpty());
@@ -154,17 +183,17 @@ public class VendorServiceImplTests {
         toReturn.add(testVendor2);
         when(vendorRepository.findAll()).thenReturn(toReturn);
         List<Vendor> list = vendorService.getAllVendors();
-        assertEquals(list.size(), 2);
+        assertEquals(2, list.size());
     }
 
     @Test
     public void getAllVendors_noArgs_throwsResponseStatusException(){
         when(vendorRepository.findAll()).thenThrow(new ResponseStatusException(HttpStatusCode.valueOf(500)));
-        try{
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             vendorService.getAllVendors();
-        }
-        catch (Exception e){
-            assertEquals(e.getMessage(), "500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"" );
-        }
+        });
+        assertEquals("500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"", exception.getMessage() );
     }
+
 }
