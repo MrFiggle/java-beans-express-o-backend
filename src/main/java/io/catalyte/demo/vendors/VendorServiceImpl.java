@@ -67,6 +67,28 @@ public class VendorServiceImpl implements VendorService {
     }
 
     /**
+     * Retrieves a vendor by its name.
+     *
+     * @param name the name of the vendor to retrieve
+     * @return the vendor with the specified name
+     * @throws ResponseStatusException not found if the vendor with the specified name is not found
+     * @throws ResponseStatusException bad request if the request fails internally
+     */
+    @Override
+    public Vendor getVendorByName(String name) {
+        if(name == null || name.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The vendor name you have supplied is invalid");
+        }
+        List<Vendor> vendorsList = vendorRepository.findAll();
+        for( Vendor vendor : vendorsList ){
+            if(vendor.getName().equalsIgnoreCase(name)){
+                return vendor;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The vendor you are looking for was not found");
+    }
+
+    /**
      * Edits an existing vendor with new information.
      *
      * @param updatedVendor the updated vendor information

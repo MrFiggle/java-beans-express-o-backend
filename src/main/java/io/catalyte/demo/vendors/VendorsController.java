@@ -48,6 +48,19 @@ public class VendorsController {
     }
 
     /**
+     * Retrieves a vendor by its name.
+     *
+     * Path is of the form localhost:{port}/name?name={name}
+     * @param name the name of the vendor to retrieve
+     * @return the vendor with the specified name
+     */
+    @GetMapping("/name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public Vendor getVendorByName(@PathVariable String name) {
+        return vendorService.getVendorByName(name);
+    }
+
+    /**
      * Updates an existing vendor.
      *
      * @param updatedVendor the updated vendor details

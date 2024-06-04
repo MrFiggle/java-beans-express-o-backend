@@ -16,6 +16,14 @@ public interface VendorService {
     public Vendor getVendorById(int id);
 
     /**
+     * Retrieves a vendor by its name.
+     *
+     * @param name the name of the vendor to retrieve
+     * @return the vendor with the specified name
+     */
+    public Vendor getVendorByName(String name);
+
+    /**
      * Updates an existing vendor.
      *
      * @param updatedVendor the updated vendor details
