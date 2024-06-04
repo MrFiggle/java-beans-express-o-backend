@@ -8,8 +8,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceImplTests {
@@ -61,6 +65,10 @@ public class CustomerServiceImplTests {
         // Valid customer input
         customer11 = new Customer(true, "John", "Doe", "john@example.com", "01/01/1990", "Tea", 132.45);
 
+        // Mock repository
+        List<Customer> mockRepository = new ArrayList<>();
+        mockRepository.add(customer11);
+
         // Mock repository behavior
         lenient().when(customerRepository.save(customer1)).thenReturn(customer1);
         lenient().when(customerRepository.save(customer2)).thenReturn(customer2);
@@ -73,6 +81,9 @@ public class CustomerServiceImplTests {
         lenient().when(customerRepository.save(customer9)).thenReturn(customer9);
         lenient().when(customerRepository.save(customer10)).thenReturn(customer10);
         lenient().when(customerRepository.save(customer11)).thenReturn(customer11);
+        lenient().when(customerRepository.getReferenceById(1)).thenReturn(customer11);
+        lenient().when(customerRepository.existsById(1)).thenReturn(true);
+
     }
 
     @Test
@@ -212,6 +223,160 @@ public class CustomerServiceImplTests {
             expectedResult = savedCustomer.equals(customer11);
         } catch (ResponseStatusException e){
             expectedResult = false;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_emptyName_returnsError(){
+        try {
+            customerService.updateCustomer(customer1, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Name fields cannot be empty");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_missingAtSymbol_returnsError(){
+        try {
+            customerService.updateCustomer(customer2, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_missingDomain_returnsError(){
+        try {
+            customerService.updateCustomer(customer3, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_missingUsername_returnsError(){
+        try {
+            customerService.updateCustomer(customer4, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_blankUsername_returnsError(){
+        try {
+            customerService.updateCustomer(customer5, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_blankDomain_returnsError(){
+        try {
+            customerService.updateCustomer(customer6, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_blankDomainExtension_returnsError(){
+        try {
+            customerService.updateCustomer(customer7, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Email must follow x@x.x format");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_birthdayInFuture_returnsError(){
+        try {
+            customerService.updateCustomer(customer8, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Birthday cannot be in the future");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_invalidBirthdayFormat_returnsError(){
+        try {
+            customerService.updateCustomer(customer9, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Must be valid date format MM/dd/yyyy");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_invalidDate_returnsError(){
+        try {
+            customerService.updateCustomer(customer10, 1);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.BAD_REQUEST);
+            boolean errorMessage = e.getMessage().contains("Must be valid date format MM/dd/yyyy");
+            expectedResult = error400 && errorMessage;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_validCustomer_returnsSavedResult(){
+        try {
+            Customer savedCustomer = customerService.updateCustomer(customer11, 1);
+            expectedResult = savedCustomer.equals(customer11);
+        } catch (ResponseStatusException e){
+            expectedResult = false;
+        }
+        assertTrue(expectedResult);
+    }
+
+    @Test
+    public void updateCustomer_invalidId_returnError(){
+        try {
+            customerService.updateCustomer(customer11, 2);
+            expectedResult = false;
+        } catch (ResponseStatusException e){
+            boolean error400 = e.getStatusCode().equals(HttpStatus.NOT_FOUND);
+            boolean errorMessage = e.getMessage().contains("Customer does not exist.");
+            expectedResult = error400 && errorMessage;
         }
         assertTrue(expectedResult);
     }

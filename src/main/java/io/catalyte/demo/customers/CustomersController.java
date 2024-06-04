@@ -26,4 +26,10 @@ public class CustomersController {
     public Customer createCustomer(@RequestBody Customer customerToCreate){
         return  customerService.createCustomer(customerToCreate);
     }
+
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Customer editCustomer(@RequestBody Customer customerUpdated, @PathVariable int id){
+        return customerService.updateCustomer(customerUpdated, id);
+    }
 }
