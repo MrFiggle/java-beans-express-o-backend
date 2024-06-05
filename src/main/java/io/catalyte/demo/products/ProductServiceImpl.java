@@ -1,5 +1,6 @@
 package io.catalyte.demo.products;
 
+import io.catalyte.demo.vendors.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,18 @@ import java.util.Optional;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-    ProductRepository productRepository;
+    private final VendorRepository vendorRepository;
+    private final ProductRepository productRepository;
+
     /**
      * Creates an instance of the service with the provided instance of the repository
      * @param productRepository the repository to be used by this service
+     * @param vendorRepository the vendor repository to be used by this service
      */
     @Autowired
-    public ProductServiceImpl( ProductRepository productRepository ) {
+    public ProductServiceImpl(ProductRepository productRepository, VendorRepository vendorRepository) {
         this.productRepository = productRepository;
+        this.vendorRepository = vendorRepository;
     }
     /**
      * Retrieves a list of products with the specified name.
@@ -55,6 +60,16 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Product createProduct(Product productToCreate) {
+        String errors = "";
+        ProductValidator productValidator = new ProductValidator(vendorRepository);
+
+        errors = errors + productValidator.validateProduct(productToCreate);
+
+        if (!errors.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors);
+        }
+
+        productToCreate.calculateSalePrice();
         return productRepository.save(productToCreate);
     }
     /**
