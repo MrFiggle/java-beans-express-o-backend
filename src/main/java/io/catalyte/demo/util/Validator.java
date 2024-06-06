@@ -55,15 +55,35 @@ public class Validator {
         return  errorCollector;
     }
 
+    public String validateFirstName(String firstName) {
+        String errorCollector = "";
+        if (firstName == null) {
+            errorCollector = errorCollector + "First name cannot be null. ";
+        } else if (firstName.isEmpty()) {
+            errorCollector = errorCollector + "First name cannot be empty. ";
+        }
+        return  errorCollector;
+    }
+
+    public String validateLastName(String firstName) {
+        String errorCollector = "";
+        if (firstName == null) {
+            errorCollector = errorCollector + "Last name cannot be null. ";
+        } else if (firstName.isEmpty()) {
+            errorCollector = errorCollector + "Last name cannot be empty. ";
+        }
+        return  errorCollector;
+    }
+
     public String validateEmail(String email) {
         String errorCollector = "";
 
         if (email == null) {
-            errorCollector = errorCollector + "Error cannot be null.";
+            errorCollector = errorCollector + "Email cannot be null. ";
         } else if (email.isEmpty()) {
-            errorCollector = errorCollector + "Email cannot be empty.";
+            errorCollector = errorCollector + "Email cannot be empty. ";
         } else {
-            String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            String emailPattern = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
             Pattern pattern = Pattern.compile(emailPattern);
             Matcher matcher = pattern.matcher(email);
             if (!matcher.find()) {
