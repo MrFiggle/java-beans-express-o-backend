@@ -4,6 +4,9 @@ import io.catalyte.demo.util.Validator;
 import io.catalyte.demo.vendors.VendorRepository;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductValidator extends Validator {
     private final VendorRepository vendorRepository;
@@ -29,7 +32,6 @@ public class ProductValidator extends Validator {
         errors += validateMarkUpPercentage(productToValidate.getMarkupPercentage(), productToValidate.getClassification());
         errors += validateVendorId(productToValidate.getVendorId(), productToValidate.getClassification());
         errors += validateDrinkType(productToValidate.getDrinkType(), productToValidate.getClassification());
-        errors += validatePrice(productToValidate.getSalePrice(), "Sale price");
         return errors;
     }
 
