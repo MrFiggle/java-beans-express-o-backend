@@ -1,6 +1,6 @@
 package io.catalyte.demo.vendors;
+import io.catalyte.demo.products.Product;
 import io.catalyte.demo.util.TimeStamp;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +24,10 @@ public class VendorServiceImplTests {
 
     @Mock
     VendorRepository vendorRepository;
+
+    @Mock
+    VendorValidator vendorValidator;
+
     VendorService vendorService;
     Vendor testVendor;
     Vendor testVendor2;
@@ -31,7 +35,7 @@ public class VendorServiceImplTests {
 
     @BeforeEach
     public void setUp() {
-        vendorService = new VendorServiceImpl(vendorRepository);
+        vendorService = new VendorServiceImpl(vendorRepository, vendorValidator);
         testVendor = new Vendor("Wayne Enterprises",
                 "123 Fake St",
                 "456 Imaginary Ave",
@@ -39,9 +43,9 @@ public class VendorServiceImplTests {
                 "New York",
                 "11223",
                 "Bruce Wayne",
-                "b@man.com",
                 "CEO",
-                "555-555-5555");
+                "555-555-5555",
+                "b@man.com");
         testVendor.setId(1);
         testVendor2 = new Vendor("Stark Industries",
                 "10880 Malibu Point",
@@ -50,9 +54,9 @@ public class VendorServiceImplTests {
                 "California",
                 "90263",
                 "Tony Stark",
-                "I@mIronman.com",
                 "CEO",
-                "424-424-4242");
+                "424-424-4242",
+                "I@mIronman.com");
         myList = new ArrayList<>();
         myList.add(testVendor);
         myList.add(testVendor2);
@@ -60,6 +64,7 @@ public class VendorServiceImplTests {
 
     @Test
     public void createVendor_withValidVendor_returnsPersistedVendor() {
+        doNothing().when(vendorValidator).validate(any(Vendor.class), any(boolean.class));
 
         TimeStamp dummyDate = new TimeStamp();
 
@@ -83,6 +88,8 @@ public class VendorServiceImplTests {
 
     @Test
     public void editVendor_validVendor_returnsPersistedVendor() {
+        doNothing().when(vendorValidator).validate(any(Vendor.class), any(boolean.class));
+
         when(vendorRepository.findById(any(Integer.class))).thenReturn(Optional.ofNullable(testVendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(testVendor);
 
@@ -134,7 +141,6 @@ public class VendorServiceImplTests {
 
     @Test
     public void editVendor_idInBody_throwsResponseException() {
-
         testVendor2.setId(1);
         boolean exceptionFound = false;
         try {

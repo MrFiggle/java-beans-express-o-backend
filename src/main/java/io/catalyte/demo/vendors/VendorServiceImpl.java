@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class VendorServiceImpl implements VendorService {
 
     VendorRepository vendorRepository;
+    VendorValidator vendorValidator;
 
     /**
      * Constructs a VendorServiceImpl with the specified VendorRepository.
@@ -21,8 +23,9 @@ public class VendorServiceImpl implements VendorService {
      * @param vendorRepository the repository to be used for vendor operations
      */
     @Autowired
-    public VendorServiceImpl(VendorRepository vendorRepository) {
+    public VendorServiceImpl(VendorRepository vendorRepository, VendorValidator vendorValidator) {
         this.vendorRepository = vendorRepository;
+        this.vendorValidator = vendorValidator;
     }
 
     /**
@@ -32,6 +35,8 @@ public class VendorServiceImpl implements VendorService {
      * @return the created vendor
      */
     public Vendor createVendor(Vendor vendorToCreate) {
+        vendorValidator.validate(vendorToCreate, false);
+
         vendorRepository.save(vendorToCreate);
         return vendorToCreate;
     }
@@ -101,7 +106,17 @@ public class VendorServiceImpl implements VendorService {
         if (updatedVendor.getId() > 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id field forbidden");
         }
+
+        boolean isSameName = false;
+
         Vendor savedVendor = getVendorById(id);
+
+        if (Objects.equals(savedVendor.getName(), updatedVendor.getName())){
+            isSameName = true;
+        }
+
+
+        vendorValidator.validate(updatedVendor, isSameName);
 
         savedVendor.setName(updatedVendor.getName());
         savedVendor.setStreet1(updatedVendor.getStreet1());
