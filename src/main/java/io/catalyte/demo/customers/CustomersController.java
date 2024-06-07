@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Controller for handling CRUD operations on Customer entities.
  */
@@ -27,9 +29,28 @@ public class CustomersController {
         return  customerService.createCustomer(customerToCreate);
     }
 
+    /**
+     * Updates a specific customer
+     *
+     * @param customerUpdated - customer object with updated info
+     * @param id - id of customer to edit
+     * @return - updated customer
+     */
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Customer editCustomer(@RequestBody Customer customerUpdated, @PathVariable int id){
         return customerService.updateCustomer(customerUpdated, id);
     }
+
+    /**
+     * Retrieves all customers
+     *
+     * @return a list of customers
+     */
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
+    }
+
 }

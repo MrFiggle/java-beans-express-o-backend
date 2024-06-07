@@ -1,5 +1,7 @@
 package io.catalyte.demo.customers;
 
+import java.util.List;
+
 /**
  * Service interface for handling CRUD operations on Customer entities.
  */
@@ -20,4 +22,11 @@ public interface CustomerService {
      * @return - updated customer
      */
     Customer updateCustomer(Customer customerUpdated, int idToEdit);
+
+    /**
+     * Retrieves a list of customers in database
+     *
+     * @return a list of customers
+     */
+    List<Customer> getAllCustomers();
 }
