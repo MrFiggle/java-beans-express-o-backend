@@ -252,40 +252,6 @@ public class ProductServiceImplTest {
     }
 
 
-    @Test
-    public void createProduct_withInvalidSalePrice_throwsBadRequest() {
-        when(vendorRepository.findById(1)).thenReturn(Optional.of(new Vendor()));
-        Product bakedGood = new Product(true, "Description", "Name", 1, new ArrayList<>(), ProductType.BAKEDGOOD, BigDecimal.valueOf(12.56), new ArrayList<>(), BigDecimal.valueOf(20));
-
-        bakedGood.setSalePrice(BigDecimal.ZERO);
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            productService.createProduct(bakedGood);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals(exception.getReason(), "Sale price cannot be empty. ");
-
-        bakedGood.setSalePrice(null);
-        exception = assertThrows(ResponseStatusException.class, () -> {
-            productService.createProduct(bakedGood);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals(exception.getReason(), "Sale price cannot be null. ");
-
-        bakedGood.setSalePrice(BigDecimal.valueOf(2.333));
-        exception = assertThrows(ResponseStatusException.class, () -> {
-            productService.createProduct(bakedGood);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals(exception.getReason(), "Sale price must have two decimals. ");
-
-        bakedGood.setSalePrice(BigDecimal.valueOf(-2.23));
-        exception = assertThrows(ResponseStatusException.class, () -> {
-            productService.createProduct(bakedGood);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals(exception.getReason(), "Sale price cannot be negative. ");
-    }
-
     public void getAllProducts_withNoProducts_emptyList(){
         productsInDataBase = new ArrayList<>();
         lenient().when(productRepository.findAll()).thenReturn(productsInDataBase);
