@@ -1,5 +1,6 @@
 package io.catalyte.demo.customers;
 
+import io.catalyte.demo.products.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
@@ -21,6 +23,7 @@ public class CustomerServiceImplTests {
     @Mock
     CustomerRepository customerRepository;
 
+    List<Customer> mockRepository;
     CustomerService customerService;
 
     Customer customer1;
@@ -381,5 +384,19 @@ public class CustomerServiceImplTests {
         assertTrue(expectedResult);
     }
 
+    @Test
+    public void getAllCustomers_noCustomers_emptyArray(){
+        mockRepository = new ArrayList<>();
+        lenient().when(customerRepository.findAll()).thenReturn(mockRepository);
+        List<Customer> returnedList = customerService.getAllCustomers();
+        assertTrue(returnedList.isEmpty());
+    }
+
+    @Test
+    public void getAllCustomers_existingList_returnList(){
+        lenient().when(customerRepository.findAll()).thenReturn(mockRepository);
+        List<Customer> returnedList = customerService.getAllCustomers();
+        assertEquals(returnedList, mockRepository);
+    }
 
 }

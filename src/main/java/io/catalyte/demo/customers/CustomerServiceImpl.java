@@ -74,4 +74,17 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
         }
     }
+
+    /**
+     * Retrieves a list of customers in database
+     *
+     * @return a list of customers
+     */
+    public List<Customer> getAllCustomers(){
+        try {
+            return customerRepository.findAll();
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "There was an internal error while fetching your data");
+        }
+    }
 }
