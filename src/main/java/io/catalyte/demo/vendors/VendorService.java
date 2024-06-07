@@ -13,7 +13,7 @@ public interface VendorService {
      * @param id the ID of the vendor to retrieve
      * @return the vendor with the specified ID
      */
-    public Vendor getVendorById(int id);
+    Vendor getVendorById(int id);
 
     /**
      * Retrieves a vendor by its name.
@@ -21,7 +21,7 @@ public interface VendorService {
      * @param name the name of the vendor to retrieve
      * @return the vendor with the specified name
      */
-    public Vendor getVendorByName(String name);
+    Vendor getVendorByName(String name);
 
     /**
      * Updates an existing vendor.
@@ -30,7 +30,7 @@ public interface VendorService {
      * @param id            the ID of the vendor to update
      * @return the updated vendor
      */
-    public Vendor editVendor(Vendor updatedVendor, int id);
+    Vendor editVendor(Vendor updatedVendor, int id);
 
     /**
      * Creates a new vendor.
@@ -38,12 +38,12 @@ public interface VendorService {
      * @param vendorToCreate the vendor to create
      * @return the created vendor
      */
-    public Vendor createVendor(Vendor vendorToCreate);
+    Vendor createVendor(Vendor vendorToCreate);
 
     /**
      * Retrieves all vendors
      *
      * @return a list of vendors
      */
-    public List<Vendor> getAllVendors();
+    List<Vendor> getAllVendors();
 }
