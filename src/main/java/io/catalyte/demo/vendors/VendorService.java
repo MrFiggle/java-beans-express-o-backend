@@ -1,5 +1,4 @@
 package io.catalyte.demo.vendors;
-
 import java.util.List;
 
 /**

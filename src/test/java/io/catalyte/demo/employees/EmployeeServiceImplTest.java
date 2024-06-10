@@ -1,14 +1,17 @@
 package io.catalyte.demo.employees;
 
+import io.catalyte.demo.vendors.Vendor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -98,6 +101,23 @@ public class EmployeeServiceImplTest {
         });
         assertEquals(HttpStatus.BAD_REQUEST, exception3.getStatusCode());
         assertEquals(exception3.getReason(), "Email must follow x@x.x format. " );
+    }
 
+    @Test
+    public void getAllEmployees_noArg_returnsListOfEmployees(){
+        List<Vendor> toReturn = new ArrayList<>();
+        when(employeeRepository.findAll()).thenReturn(employeesInDataBase);
+        List<Employee> list = employeeService.getAllEmployees();
+        assertEquals(3, list.size());
+    }
+
+    @Test
+    public void getAllEmployees_noArgs_throwsResponseStatusException(){
+        when(employeeRepository.findAll()).thenThrow(new ResponseStatusException(HttpStatusCode.valueOf(500)));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            employeeService.getAllEmployees();
+        });
+        assertEquals("500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"", exception.getMessage() );
     }
 }
