@@ -18,10 +18,10 @@ public class IngredientValidator {
      */
     public String validateName(String name) {
         String errorCollector = "";
-        if (Objects.equals(name, "")) {
-            errorCollector = errorCollector + "Name can not be empty. ";
-        } else if (name == null) {
+        if (name == null) {
             errorCollector = errorCollector + "Name can not be null. ";
+        } else if (Objects.equals(name, "")) {
+            errorCollector = errorCollector + "Name can not be empty. ";
         } else {
             String[] nameArray = new String[0];
             boolean doubleSpaces = false;
@@ -60,63 +60,5 @@ public class IngredientValidator {
         }
         return errorCollector;
     }
-    /**
-     * Checks for errors in the purchasing cost of the ingredient.
-     * @param cost the purchasing cost of the ingredient.
-     * @return String containing error messages that relate to ingredient purchasing cost.
-     */
-    public String validateCost(BigDecimal cost) {
-        String errorCollector = "";
-        if (Objects.equals(cost, BigDecimal.valueOf(0))) {
-            errorCollector = errorCollector + "Cost can not be empty. ";
-        } else if (cost == null) {
-            errorCollector = errorCollector + "Cost can not be null. ";
-        } else {
-            String costString = cost.toString();
-            Pattern pattern = Pattern.compile("\\.\\d{2}$");
-            Matcher matcher = pattern.matcher(costString);
-            if (!matcher.find()) {
-                errorCollector = errorCollector + "Cost must have two decimals. ";
-            }
-        }
-        return errorCollector;
-    }
-    /**
-     * Checks for errors in the unit of measure of the ingredient.
-     * @param unitOfMeasure the unit of measure of the ingredient.
-     * @return String containing error messages that relate to ingredient unit of measure.
-     */
-    public String validateUnitOfMeasure(String unitOfMeasure) {
-        String errorCollector = "";
-        if ( Objects.equals( unitOfMeasure, "" )) {
-            errorCollector = errorCollector + "Unit of measure can not be empty. ";
-            //      unit of measure must be all lower case
-        } else if (unitOfMeasure == null) {
-            errorCollector = errorCollector + "Unit of measure can not be null. ";
-        } else if (!(unitOfMeasure.toLowerCase().equals(unitOfMeasure))){
-            errorCollector = errorCollector + "Unit of measure must be all lowercase. ";
-        }
-        return errorCollector;
-    }
-    /**
-     * Checks for errors in the unit amount of the ingredient.
-     * @param unitAmount the unit amount of the ingredient.
-     * @return String containing error messages that relate to ingredient unit amount.
-     */
-    public String validateUnitAmount(BigDecimal unitAmount) {
-        String errorCollector = "";
-        if ( Objects.equals( unitAmount, BigDecimal.valueOf(0) )) {
-            errorCollector = errorCollector + "Unit amount can not be empty. ";
-        } else if ( unitAmount == null) {
-            errorCollector = errorCollector + "Unit amount can not be null. ";
-        } else {
-            Pattern pattern = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
-            String unitAmountString = unitAmount.toString();
-            Matcher matcher = pattern.matcher(unitAmountString);
-            if (!matcher.find()) {
-                errorCollector = errorCollector + "Unit amount can only have up to two decimals. ";
-            }
-        }
-        return errorCollector;
-    }
+
 }
