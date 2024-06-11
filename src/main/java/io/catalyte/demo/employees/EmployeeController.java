@@ -35,4 +35,17 @@ public class EmployeeController {
         return employeeService.createEmployee(employeeToCreate);
     }
 
+    /**
+     * Updates a specified employee
+     *
+     * @param updatedEmployee - employee object with updated info
+     * @param id - id of employee to edit
+     * @return - updated employee
+     */
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Employee editEmployee(@RequestBody Employee updatedEmployee, @PathVariable int id) {
+        return employeeService.updateEmployee(updatedEmployee, id);
+    }
+
 }
