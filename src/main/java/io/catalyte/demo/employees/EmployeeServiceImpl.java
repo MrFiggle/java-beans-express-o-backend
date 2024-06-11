@@ -36,4 +36,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeRepository.save(employeeToCreate);
     }
+
+    /**
+     * Updates a specified employee
+     *
+     * @param updatedEmployee - employee object with updated info
+     * @param idToEdit - id of employee to edit
+     * @return - updated employee
+     */
+    public Employee updateEmployee(Employee updatedEmployee, int idToEdit) {
+        String errors = "";
+        EmployeeValidator employeeValidator = new EmployeeValidator();
+
+        errors += employeeValidator.validateEmployee(updatedEmployee);
+
+        if (errors.isEmpty()) {
+            if (employeeRepository.existsById(idToEdit)){
+                Employee updated = employeeRepository.getReferenceById(idToEdit);
+                updated.setActive(updatedEmployee.isActive());
+                updated.setFirstName(updatedEmployee.getFirstName());
+                updated.setLastName(updatedEmployee.getLastName());
+                updated.setEmail(updatedEmployee.getEmail());
+                return employeeRepository.save(updated);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id does not exist.");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors);
+        }
+    }
 }

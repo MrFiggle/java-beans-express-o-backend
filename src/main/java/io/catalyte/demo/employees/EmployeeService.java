@@ -12,4 +12,13 @@ public interface EmployeeService {
      * @return created employee
      */
     Employee createEmployee(Employee employeeToCreate);
+
+    /**
+     * Updates a specified employee
+     *
+     * @param updatedEmployee - employee object with updated info
+     * @param idToEdit - id of employee to edit
+     * @return - updated employee
+     */
+    Employee updateEmployee(Employee updatedEmployee, int idToEdit);
 }
