@@ -8,17 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -251,7 +248,65 @@ public class ProductServiceImplTest {
         assertEquals(exception.getReason(), "Markup percentage not applicable for drinks. ");
     }
 
+    @Test
+    public void editProduct_withValidUpdatedProduct_returnsUpdatedProduct() {
+        Product existingProduct = productsInDataBase.get(0);
+        Product updatedProduct = new Product(false, "Updated Description", "Updated Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(15.00).setScale(2, RoundingMode.UNNECESSARY), new ArrayList<AllergenList>());
 
+        when(productRepository.findById(existingProduct.getId())).thenReturn(Optional.of(existingProduct));
+        when(productRepository.save(any(Product.class))).thenReturn(existingProduct);
+
+        Product result = productService.editProduct(updatedProduct, existingProduct.getId());
+
+        assertEquals(updatedProduct.getName(), result.getName());
+        assertEquals(updatedProduct.getDescription(), result.getDescription());
+        assertEquals(updatedProduct.getDrinkType(), result.getDrinkType());
+        assertEquals(updatedProduct.getCost(), result.getCost());
+    }
+
+    @Test
+    public void editProduct_withInvalidProductId_throwsNotFound() {
+        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        Product updatedProduct = new Product(false, "Updated Description", "Updated Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(15.00), new ArrayList<AllergenList>());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            productService.editProduct(updatedProduct, 999);
+        });
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        assertEquals("No product found.", exception.getReason());
+    }
+
+    @Test
+    public void editProduct_withIdInUpdatedProduct_throwsBadRequest() {
+        Product updatedProduct = new Product(false, "Updated Description", "Updated Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(15.00), new ArrayList<AllergenList>());
+        updatedProduct.setId(5);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            productService.editProduct(updatedProduct, 1);
+        });
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Id field forbidden", exception.getReason());
+    }
+
+    @Test
+    public void editProduct_withValidationErrors_throwsBadRequest() {
+        Product existingProduct = productsInDataBase.get(0);
+        Product updatedProduct = new Product(false, "", "Updated Name", new ArrayList<String>(), ProductType.DRINK, DrinkType.TEA, BigDecimal.valueOf(15.00), new ArrayList<AllergenList>());
+
+        when(productRepository.findById(existingProduct.getId())).thenReturn(Optional.of(existingProduct));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            productService.editProduct(updatedProduct, existingProduct.getId());
+        });
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertTrue(Objects.requireNonNull(exception.getReason()).contains("Description cannot be empty."));
+    }
+
+    @Test
     public void getAllProducts_withNoProducts_emptyList(){
         productsInDataBase = new ArrayList<>();
         lenient().when(productRepository.findAll()).thenReturn(productsInDataBase);

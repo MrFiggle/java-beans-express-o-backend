@@ -1,6 +1,7 @@
 package io.catalyte.demo.products;
 
 import java.util.List;
+
 /**
  * Service interface for managing products.
  * Defines methods for retrieving, creating, updating, and deleting products.
@@ -22,6 +23,15 @@ public interface ProductService {
      * @return the created product
      */
     Product createProduct(Product productToCreate);
+
+    /**
+     * Updates an existing product.
+     *
+     * @param updatedProduct the updated product details
+     * @param id            the ID of the product to update
+     * @return the updated product
+     */
+    Product editProduct(Product updatedProduct, int id);
 
     /**
      * Retrieves a product by its unique identifier.
