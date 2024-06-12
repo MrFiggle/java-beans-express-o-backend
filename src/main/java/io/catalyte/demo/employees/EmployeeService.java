@@ -1,4 +1,5 @@
 package io.catalyte.demo.employees;
+import java.util.List;
 
 /**
  * Service interface for handling CRUD operations on Employee entities
@@ -21,4 +22,13 @@ public interface EmployeeService {
      * @return - updated employee
      */
     Employee updateEmployee(Employee updatedEmployee, int idToEdit);
+
+    /**
+     * Gets a list of all employees
+     *
+     * @return a list of employees
+     */
+    public List<Employee> getAllEmployees();
+
 }
+

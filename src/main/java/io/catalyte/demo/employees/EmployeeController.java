@@ -1,5 +1,5 @@
 package io.catalyte.demo.employees;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -48,4 +48,14 @@ public class EmployeeController {
         return employeeService.updateEmployee(updatedEmployee, id);
     }
 
+    /**
+     * Gets a list of all employees
+     *
+     * @return a list of employees
+     */
+    @GetMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
 }

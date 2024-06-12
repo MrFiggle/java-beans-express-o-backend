@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 /**
  * Implementation of the EmployeeService interface.
  * Provides functionality related to managing employees.
@@ -63,6 +65,19 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors);
+        }
+    }
+
+    /**
+     * Gets a list of all employees
+     *
+     * @return a list of employees
+     */
+    public List<Employee> getAllEmployees(){
+        try {
+            return employeeRepository.findAll();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "There was an internal error while fetching your data");
         }
     }
 }
