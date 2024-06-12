@@ -2,11 +2,7 @@ package io.catalyte.demo.products;
 
 import io.catalyte.demo.util.Validator;
 import io.catalyte.demo.vendors.VendorRepository;
-
 import java.math.BigDecimal;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ProductValidator extends Validator {
     private final VendorRepository vendorRepository;

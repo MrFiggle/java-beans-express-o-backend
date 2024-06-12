@@ -1,5 +1,4 @@
 package io.catalyte.demo.vendors;
-import io.catalyte.demo.products.Product;
 import io.catalyte.demo.util.TimeStamp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
