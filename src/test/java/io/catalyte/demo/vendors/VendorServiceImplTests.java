@@ -23,13 +23,18 @@ public class VendorServiceImplTests {
 
     @Mock
     VendorRepository vendorRepository;
+
+    @Mock
+    VendorValidator vendorValidator;
+
     VendorService vendorService;
     Vendor testVendor;
     Vendor testVendor2;
+    List<Vendor> myList;
 
     @BeforeEach
     public void setUp() {
-        vendorService = new VendorServiceImpl(vendorRepository);
+        vendorService = new VendorServiceImpl(vendorRepository, vendorValidator);
         testVendor = new Vendor("Wayne Enterprises",
                 "123 Fake St",
                 "456 Imaginary Ave",
@@ -37,9 +42,9 @@ public class VendorServiceImplTests {
                 "New York",
                 "11223",
                 "Bruce Wayne",
-                "b@man.com",
                 "CEO",
-                "555-555-5555");
+                "555-555-5555",
+                "b@man.com");
         testVendor.setId(1);
         testVendor2 = new Vendor("Stark Industries",
                 "10880 Malibu Point",
@@ -48,13 +53,17 @@ public class VendorServiceImplTests {
                 "California",
                 "90263",
                 "Tony Stark",
-                "I@mIronman.com",
                 "CEO",
-                "424-424-4242");
+                "424-424-4242",
+                "I@mIronman.com");
+        myList = new ArrayList<>();
+        myList.add(testVendor);
+        myList.add(testVendor2);
     }
 
     @Test
     public void createVendor_withValidVendor_returnsPersistedVendor() {
+        doNothing().when(vendorValidator).validate(any(Vendor.class), any(boolean.class));
 
         TimeStamp dummyDate = new TimeStamp();
 
@@ -78,6 +87,8 @@ public class VendorServiceImplTests {
 
     @Test
     public void editVendor_validVendor_returnsPersistedVendor() {
+        doNothing().when(vendorValidator).validate(any(Vendor.class), any(boolean.class));
+
         when(vendorRepository.findById(any(Integer.class))).thenReturn(Optional.ofNullable(testVendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(testVendor);
 
@@ -129,7 +140,6 @@ public class VendorServiceImplTests {
 
     @Test
     public void editVendor_idInBody_throwsResponseException() {
-
         testVendor2.setId(1);
         boolean exceptionFound = false;
         try {
@@ -139,6 +149,30 @@ public class VendorServiceImplTests {
         }
         assertTrue(exceptionFound);
 
+    }
+
+    @Test
+    public void getVendorByName_name_returnsVendor(){
+        when(vendorRepository.findAll()).thenReturn(myList);
+        Vendor myVendor = vendorService.getVendorByName(testVendor.getName());
+        assertEquals(testVendor.getName(), myVendor.getName());
+    }
+
+    @Test
+    public void getVendorByName_invalidName_throwsResponseStatusException(){
+        when(vendorRepository.findAll()).thenReturn(myList);
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            vendorService.getVendorByName("not a valid name");
+        });
+        assertEquals("404 NOT_FOUND \"The vendor you are looking for was not found\"", exception.getMessage());
+    }
+
+    @Test
+    public void getVendorByName_name_throwsResponseStatusException(){
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            vendorService.getVendorByName(null);
+        });
+        assertEquals("400 BAD_REQUEST \"The vendor name you have supplied is invalid\"", exception.getMessage());
     }
 
     @Test
@@ -154,17 +188,17 @@ public class VendorServiceImplTests {
         toReturn.add(testVendor2);
         when(vendorRepository.findAll()).thenReturn(toReturn);
         List<Vendor> list = vendorService.getAllVendors();
-        assertEquals(list.size(), 2);
+        assertEquals(2, list.size());
     }
 
     @Test
     public void getAllVendors_noArgs_throwsResponseStatusException(){
         when(vendorRepository.findAll()).thenThrow(new ResponseStatusException(HttpStatusCode.valueOf(500)));
-        try{
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             vendorService.getAllVendors();
-        }
-        catch (Exception e){
-            assertEquals(e.getMessage(), "500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"" );
-        }
+        });
+        assertEquals("500 INTERNAL_SERVER_ERROR \"There was an internal error while fetching your data\"", exception.getMessage() );
     }
+
 }

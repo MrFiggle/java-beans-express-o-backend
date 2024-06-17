@@ -5,8 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import io.catalyte.demo.util.TimeStamp;
 
@@ -21,13 +21,13 @@ public class Product {
   private Boolean active;
   private String description;
   private String name;
-  private int vendorId;
+  private Integer vendorId;
   private ArrayList<String> ingredients;
   private ProductType classification;
   private DrinkType drinkType;
   private BigDecimal cost;
   private ArrayList<AllergenList> allergens;
-  private int markupPercentage;
+  private BigDecimal markupPercentage;
   private BigDecimal salePrice;
   private String createdTimestamp;
   private String editedTimestamp;
@@ -51,9 +51,8 @@ public class Product {
    * @param drinkType An Enum value to determine the type of drink the product is.
    * @param costToProduce BigDecimal value of the cost to make the product.
    * @param allergens A list of allergens that product contains
-   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens, BigDecimal salePrice) {
+  public Product(Boolean active, String description, String name, ArrayList<String> ingredients, ProductType classification, DrinkType drinkType, BigDecimal costToProduce, ArrayList<AllergenList> allergens) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -62,7 +61,7 @@ public class Product {
     this.classification = classification;
     this.cost = costToProduce;
     this.allergens = allergens;
-    this.salePrice = salePrice;
+    this.calculateSalePrice();
     TimeStamp timeStamp = new TimeStamp();
     String ts = timeStamp.getTimeStamp();
     this.createdTimestamp = ts;
@@ -79,9 +78,8 @@ public class Product {
    * @param vendorPrice BigDecimal value of the cost to purchase
    * @param allergens A list of allergens that product contains
    * @param markupPercentage Integer value of the markup percentage
-   * @param salePrice A BigDecimal value of the sale price of the product
    */
-  public Product(Boolean active, String description, String name, int vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, int markupPercentage, BigDecimal salePrice) {
+  public Product(Boolean active, String description, String name, Integer vendorId, ArrayList<String> ingredients, ProductType classification, BigDecimal vendorPrice, ArrayList<AllergenList> allergens, BigDecimal markupPercentage) {
     this.active = active;
     this.description = description;
     this.name = name;
@@ -91,7 +89,7 @@ public class Product {
     this.cost = vendorPrice;
     this.allergens = allergens;
     this.markupPercentage = markupPercentage;
-    this.salePrice = salePrice;
+    this.calculateSalePrice();
     TimeStamp timeStamp = new TimeStamp();
     String ts = timeStamp.getTimeStamp();
     this.createdTimestamp = ts;
@@ -122,7 +120,7 @@ public class Product {
    * Retrieves the vendor id of the product.
    * @return the vendor id of the product.
    */
-  public int getVendorId() {
+  public Integer getVendorId() {
     return vendorId;
   }
   /**
@@ -164,7 +162,7 @@ public class Product {
    * Retrieves the markup percentage of the product.
    * @return the markup percentage of the product.
    */
-  public int getMarkupPercentage() {
+  public BigDecimal getMarkupPercentage() {
     return markupPercentage;
   }
   /**
@@ -202,7 +200,7 @@ public class Product {
    * Sets the vendor id of the product.
    * @param vendorId the vendor id to be set.
    */
-  public void setVendorId(int vendorId) {
+  public void setVendorId(Integer vendorId) {
     this.vendorId = vendorId;
     this.updateEditTime();
   }
@@ -236,6 +234,7 @@ public class Product {
    */
   public void setCost(BigDecimal cost) {
     this.cost = cost;
+    this.calculateSalePrice();
     this.updateEditTime();
   }
   /**
@@ -258,8 +257,9 @@ public class Product {
    * Sets the markup percentage of the product
    * @param markupPercentage the markup percentage to be set.
    */
-  public void setMarkupPercentage(int markupPercentage) {
+  public void setMarkupPercentage(BigDecimal markupPercentage) {
     this.markupPercentage = markupPercentage;
+    this.calculateSalePrice();
     this.updateEditTime();
   }
   /**
@@ -308,6 +308,19 @@ public class Product {
   private void updateEditTime() {
     TimeStamp timeStamp = new TimeStamp();
     this.setEditedTimestamp(timeStamp.getTimeStamp());
+  }
+
+  /**
+   * Calculate the sale price from cost and markup percentage.
+   */
+  public void calculateSalePrice() {
+    if (cost == null) {
+      this.setSalePrice(null);
+    } else if (markupPercentage != null) {
+      this.setSalePrice(cost.add(markupPercentage.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP).multiply(cost)).setScale(2, RoundingMode.HALF_UP));
+    } else {
+      this.setSalePrice(cost);
+    }
   }
 }
 

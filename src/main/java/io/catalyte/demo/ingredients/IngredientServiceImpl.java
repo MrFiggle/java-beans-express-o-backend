@@ -32,15 +32,10 @@ public class IngredientServiceImpl implements IngredientService{
     public Ingredient createIngredient(Ingredient ingredientToCreate) {
         String errorCollector = "";
         errorCollector = errorCollector + ingredientValidator.validateName(ingredientToCreate.getName());
-        errorCollector = errorCollector + ingredientValidator.validateCost(ingredientToCreate.getCost());
-        errorCollector = errorCollector + ingredientValidator.validateUnitAmount(ingredientToCreate.getUnitAmount());
-        errorCollector = errorCollector + ingredientValidator.validateUnitOfMeasure(ingredientToCreate.getUnitOfMeasure());
         List<Ingredient> ingredients = ingredientRepository.findAll();
         for (Ingredient ingredient: ingredients) {
             if (Objects.equals(ingredientToCreate.getName(), ingredient.getName())){
-                if (Objects.equals(ingredientToCreate.getUnitOfMeasure(), ingredient.getUnitOfMeasure())) {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Ingredients can not have duplicate name and unit of measure.");
-                }
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Ingredients can not have duplicate name.");
             }
         }
         if(!errorCollector.isEmpty()){
