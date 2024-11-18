@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8080
   error:
     include-message: always
 spring:
@@ -12,7 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://database-1.cdc2wmaq4olp.us-west-2.rds.amazonaws.com:5432/postgres
     username: postgres
-    password: root
+    password: uNuSNtE9QpxpepeS
     driverClassName: org.postgresql.Driver
